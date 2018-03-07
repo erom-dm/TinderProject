@@ -1,10 +1,8 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Triangle {
-    private static Map<String, Integer> cache = new HashMap<>();
+
+    private static Integer knownMin = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -21,21 +19,20 @@ public class Triangle {
 
     public static int path (int tri[][], int h, int w, int sum) {
         if (h == tri.length) {
+            if (sum < knownMin) {
+                knownMin = sum;
+            }
+
             return sum;
         }
 
-        String key = h + "x" + w;
-
-        Integer sumWay = cache.get(key);
-        if (sumWay != null) {
-            return sumWay;
+        if (sum >= knownMin) {
+            return sum;
         }
+
         int left = path(tri, h+1, w+1, sum + tri[h][w]);
         int right = path(tri, h+1,  w, sum + tri[h][w]);
 
-        int min = Math.min(left, right);
-        cache.put(key, min);
-
-        return min;
+        return Math.min(left, right);
     }
 }
