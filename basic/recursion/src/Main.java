@@ -26,7 +26,7 @@ public class Main {
     }
 
 
-    // detect problem
+    // detect problem   
     public static long mystery(long a, long b) {
         if (b == 0)     return 1;
         if (b % 2 == 0) return mystery(a*a, b/2);
