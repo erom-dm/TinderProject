@@ -1,6 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Triangle {
+    private static Map<String, Integer> cache = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
@@ -19,13 +24,18 @@ public class Triangle {
             return sum;
         }
 
+        String key = h + "x" + w;
+
+        Integer sumWay = cache.get(key);
+        if (sumWay != null) {
+            return sumWay;
+        }
         int left = path(tri, h+1, w+1, sum + tri[h][w]);
         int right = path(tri, h+1,  w, sum + tri[h][w]);
 
-        if (left < right) {
-            return left;
-        }
+        int min = Math.min(left, right);
+        cache.put(key, min);
 
-        return right;
+        return min;
     }
 }
