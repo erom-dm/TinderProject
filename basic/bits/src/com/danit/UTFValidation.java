@@ -1,3 +1,5 @@
+package com.danit;
+
 import java.util.Scanner;
 
 public class UTFValidation {
