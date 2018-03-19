@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         int n = 20;
-        Integer[] array = new Integer[n];
+        int[] array = new int[n];
 
         for (int i = 0; i < n; ++i) {
             array[i] = new Random().nextInt(1000);
@@ -22,17 +22,17 @@ public class Main {
         System.out.println(binarySearch(array, element));
     }
 
-    public static int binarySearch(Integer[] array, int element) {
+    public static int binarySearch(int[] numbers, int target) {
         int start = 0;
-        int end = array.length - 1;
+        int end = numbers.length - 1;
 
         while(start <= end) {
             int middle = (start + end) / 2; //index of the middle element
-            if(array[middle] == element) {
+            if(numbers[middle] == target) {
                 return middle;
             }
 
-            if(array[middle] > element) {
+            if(numbers[middle] > target) {
                 end = middle - 1;
             } else {
                 start = middle + 1;
