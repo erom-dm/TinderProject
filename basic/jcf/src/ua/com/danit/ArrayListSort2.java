@@ -1,9 +1,6 @@
 package ua.com.danit;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ArrayListSort2 {
     public static void main(String[] args) {
@@ -25,7 +22,6 @@ public class ArrayListSort2 {
         for (Node node:list) {
             System.out.print(node.id+" ");
         }
-
     }
     public static class Node{
         public int id;
