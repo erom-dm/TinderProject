@@ -1,7 +1,6 @@
-package ua.com.danit;
-
 import org.junit.Assert;
 import org.junit.Test;
+import ua.com.danit.MyXor;
 
 public class TestMath {
 

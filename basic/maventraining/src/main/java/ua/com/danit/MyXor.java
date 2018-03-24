@@ -1,5 +1,7 @@
 package ua.com.danit;
 
+import java.util.*;
+
 public class MyXor {
 
     public String xor(String a, String b) {
@@ -14,8 +16,10 @@ public class MyXor {
         }
 
         int maxLenght = Math.max(a.length(),b.length());
+
         a = prepand(a, maxLenght);
         b = prepand(b, maxLenght);
+
         String result = "";
         for (int i = 0; i < maxLenght; i++) {
             if (a.charAt(i) == b.charAt(i)) {
@@ -24,16 +28,20 @@ public class MyXor {
 
         }
 
+
+        
+
+
         return result;
     }
 
-    private String prepand(String a, int maxLenght) {
-        int n = a.length();
+    private String prepand(String asd, int maxLenght) {
+        int n = asd.length();
         for (int i = 0; i < maxLenght - n; i++) {
-            a = "0" + a;
+            asd = "0" + asd;
 
         }
-        return a;
+        return asd;
     }
 
 }
