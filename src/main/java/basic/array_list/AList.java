@@ -19,7 +19,6 @@ public class AList<T> {
         this.values[this.position++]=value;
     }
 
-
     private boolean needResize() {
         return this.position==this.capacity;
     }
