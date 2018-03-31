@@ -8,8 +8,8 @@ public class Solution_Kmax {
 
         Comparator<Integer> c = new Comparator<Integer>() {
             @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2-o1;
+            public int compare(Integer value1, Integer value2) {
+                return value2-value1;
             }
         };
 
