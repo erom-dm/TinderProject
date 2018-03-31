@@ -2,13 +2,11 @@ package basic.binary_heap;
 
 public class PQueue {
     private int capacity;
-    //private int[] keys;
     private int[] values;
     private int position = 1;
 
     public PQueue (int capacity) {
         this.capacity = capacity;
-        //this.keys = new int[this.capacity];
         this.values = new int[this.capacity];
         this.values[0] = Integer.MIN_VALUE;
     }
