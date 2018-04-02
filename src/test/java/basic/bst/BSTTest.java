@@ -72,6 +72,13 @@ public class BSTTest {
         }
     }
 
+    @Test
+    public void testWithValue() {
+        BST bst = new BST();
+        bst.add(8, "EIGHT");
+        assertEquals("EIGHT", bst.get(8));
+    }
+
     @After
     public void afterEach() {
         //System.out.println("after");
