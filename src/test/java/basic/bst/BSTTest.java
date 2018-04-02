@@ -7,13 +7,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BSTTest {
-/*
     @Before
     public void beforeEach() {
-        System.out.println("before");
+        //System.out.println("before");
     }
 
-*/
     @Test
     public void testSimpleOne() {
         BST bst = new BST();
@@ -54,10 +52,28 @@ public class BSTTest {
         }
     }
 
-/*
+    @Test
+    public void testMoreMoreDifficultOne() {
+        BST bst = new BST();
+        int[] keysAll = {1, 4, 5, 8, 7, 3, 2};
+        int[] keysToRemain = {8, 7, 3, 2};
+        int[] keysToDelete = {1, 4, 5};
+        for (int k : keysAll) {
+            bst.add(k);
+        }
+        for (int k : keysToDelete) {
+            bst.remove(k);
+        }
+        for (int k : keysToDelete) {
+            assertFalse(bst.contains(k));
+        }
+        for (int k : keysToRemain) {
+            assertTrue(bst.contains(k));
+        }
+    }
+
     @After
     public void afterEach() {
-        System.out.println("after");
+        //System.out.println("after");
     }
-*/
 }
