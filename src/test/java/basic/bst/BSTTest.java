@@ -4,6 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class BSTTest {
@@ -77,6 +82,33 @@ public class BSTTest {
         BST bst = new BST();
         bst.add(8, "EIGHT");
         assertEquals("EIGHT", bst.get(8));
+    }
+
+    @Test
+    public void testWalkInOrder() {
+
+        BST bst = new BST();
+        int[] keysAll = {1, 4, 5, 8, 7, 3, 2};
+        for (int k : keysAll) {
+            bst.add(k);
+        }
+        Arrays.sort(keysAll);
+        int srcSize = keysAll.length;
+
+        int sortedSize=0;
+        for (int el : bst) {
+            sortedSize++;
+        }
+
+        assertEquals(srcSize,sortedSize);
+
+        int index=0;
+        for (int el : bst) {
+//            System.out.println(el);
+            int itemFromArray = keysAll[index];
+            assertEquals(itemFromArray, el);
+            index++;
+        }
     }
 
     @After
