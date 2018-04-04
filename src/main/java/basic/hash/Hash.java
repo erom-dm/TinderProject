@@ -3,35 +3,34 @@ package basic.hash;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hash {
+public class Hash<K,V> {
     private int capacity=10;
-    private List<List<String>> values;
-    private List<List<Integer>> keys;
+    private List<List<K>> keys = new ArrayList<>();;
+    private List<List<V>> values = new ArrayList<>();;
 
     public Hash() {
-        keys = new ArrayList<>();
-        values = new ArrayList<>();
         for (int i = 0; i < capacity; i++) {
             keys.add(new ArrayList<>());
             values.add(new ArrayList<>());
         }
     }
 
-    public void put(int key, String value) {
+    public void put(K key, V value) {
         int index = hash(key);
+
         keys.get(index).add(key);
         values.get(index).add(value);
     }
 
-    public String get(int key) {
+    public V get(K key) {
         int index = hash(key);
-        List<Integer> row = keys.get(index);
-        int indexRow = row.indexOf(key);
-        String s = values.get(index).get(indexRow);
-        return s;
+
+        int indexRow = keys.get(index).indexOf(key);
+        return indexRow!=-1 ?
+                values.get(index).get(indexRow) : null;
     }
 
-    private int hash(int key) {
-        return key % capacity;
+    private int hash(K key) {
+        return key.hashCode() % capacity;
     }
 }
