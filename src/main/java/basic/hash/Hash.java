@@ -5,17 +5,15 @@ import java.util.List;
 
 public class Hash {
     private int capacity=10;
-    private List<ArrayList<String>> values;
-    private List<ArrayList<Integer>> keys;
+    private List<List<String>> values;
+    private List<List<Integer>> keys;
 
     public Hash() {
-        values = new ArrayList<ArrayList<String>>(capacity);
-        for (int i = 0; i < values.size(); i++) {
-            values.add(new ArrayList<String>());
-        }
-        keys = new ArrayList<ArrayList<Integer>>(capacity);
-        for (int i = 0; i < keys.size(); i++) {
-            keys.add(new ArrayList<Integer>());
+        keys = new ArrayList<>();
+        values = new ArrayList<>();
+        for (int i = 0; i < capacity; i++) {
+            keys.add(new ArrayList<>());
+            values.add(new ArrayList<>());
         }
     }
 
@@ -27,7 +25,7 @@ public class Hash {
 
     public String get(int key) {
         int index = hash(key);
-        ArrayList<Integer> row = keys.get(index);
+        List<Integer> row = keys.get(index);
         int indexRow = row.indexOf(key);
         String s = values.get(index).get(indexRow);
         return s;
