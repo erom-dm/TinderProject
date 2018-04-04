@@ -1,12 +1,16 @@
 package basic.bst;
 
-public class BST {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class BST implements Iterable<Integer> {
     class Node {
         private final int key;
+
         String value;
         Node left;
         Node right;
-
         Node(int key) {
             this(key, "");
         }
@@ -19,11 +23,11 @@ public class BST {
         int key() {
             return this.key;
         }
+
     }
-
     private Node root;
-    private String found;
 
+    private String found;
     public void add(int key, String value) {
         found = value; // please !!!! don't do like this ......
         root = addRecursive(key, root);
@@ -116,6 +120,23 @@ public class BST {
             current.left = deleteMin(current.left);
             return current;
         }
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        List<Integer> inorder = new ArrayList<>();
+        // magic will be here )))
+        IwillBuildInOrder(root, inorder);
+        return inorder.iterator();
+    }
+
+    private void IwillBuildInOrder(Node node, List<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        IwillBuildInOrder(node.left, result);
+        result.add(node.key());
+        IwillBuildInOrder(node.right, result);
     }
 
 }
