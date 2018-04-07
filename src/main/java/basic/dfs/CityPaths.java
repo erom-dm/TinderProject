@@ -9,34 +9,59 @@ public class CityPaths {
           // 0       1          2        3            4         5         6        7       8              9
 
 
-    public static final int[][] roads = {
-/* 0 Київ  */    {1, 5, 7, 8, 9}, // індекси міст з якими сполучений Київ
-/* 1 Житомир */  {0, 2, 8}, // міста з'днані з Житомиром
-/* 2 Лубни */    {4, 9},
-/* 3 Бориспіль */{2, 5},
-/* 4 Фастів */   {9},
-/* 5 Ніжин */    {0, 3},
-/* 6 Умань */    {8, 9},
-/* 7 Суми */     {0, 2, 6},
-/* 8 Хмельн. */  {6},
-/* 9 Миколаїв */  {2, 6},
-    };
-
+//    public static final int[][] roads = {
+///* 0 Київ  */    {1, 5, 7, 8, 9}, // індекси міст з якими сполучений Київ
+///* 1 Житомир */  {0, 2, 8}, // міста з'днані з Житомиром
+///* 2 Лубни */    {4, 9},
+///* 3 Бориспіль */{2, 5},
+///* 4 Фастів */   {9},
+///* 5 Ніжин */    {0, 3},
+///* 6 Умань */    {8, 9},
+///* 7 Суми */     {0, 2, 6},
+///* 8 Хмельн. */  {6},
+///* 9 Миколаїв */  {2, 6},
+//    };
 
     public static void main(String[] args) {
 
+        Graph roads = new Graph(cities.length);
+
+        roads.add(0, 1);
+        roads.add(0, 5);
+        roads.add(0, 7);
+        roads.add(0, 8);
+        roads.add(0, 9);
+        roads.add(1, 0);
+        roads.add(1, 2);
+        roads.add(1, 8);
+        roads.add(2, 4);
+        roads.add(2, 9);
+        roads.add(3, 2);
+        roads.add(3, 5);
+        roads.add(4, 9);
+        roads.add(5, 0);
+        roads.add(5, 3);
+        roads.add(6, 8);
+        roads.add(6, 9);
+        roads.add(7, 0);
+        roads.add(7, 2);
+        roads.add(7, 6);
+        roads.add(8, 6);
+        roads.add(9, 2);
+        roads.add(9, 6);
+
         int start = 8;
         int end = 0;
-        boolean[] visited = new boolean[roads.length];
+        boolean[] visited = new boolean[cities.length];
         Stack<Integer> stack = new Stack<>();
-        int[] parents = new int[roads.length];
+        int[] parents = new int[cities.length];
 
         stack.push(start);
         visited[start] = true;
 
         while (!stack.isEmpty()) {
             int current = stack.pop();
-            for (int city: roads[current]) {
+            for (int city: roads.adj(current)) {
                 if (!visited[city]) {
                     stack.push(city);
                     visited[city] = true;
