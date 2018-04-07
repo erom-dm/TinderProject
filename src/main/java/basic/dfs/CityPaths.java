@@ -6,7 +6,7 @@ public class CityPaths {
 
     public static final String[] cities = {
             "Київ", "Житомир", "Лубни", "Бориспіль", "Фастів", "Ніжин", "Умань", "Суми", "Хмельницький", "Миколаїв"};
-          // 0       1          2        3            4         5         6        7       8              9
+    // 0       1          2        3            4         5         6        7       8              9
 
 
 //    public static final int[][] roads = {
@@ -59,23 +59,32 @@ public class CityPaths {
         stack.push(start);
         visited[start] = true;
 
-        while (!stack.isEmpty()) {
-            int current = stack.pop();
-            for (int city: roads.adj(current)) {
-                if (!visited[city]) {
-                    stack.push(city);
-                    visited[city] = true;
-                    parents[city] = current;
-                }
-            }
-        }
+//        while (!stack.isEmpty()) {
+//            int current = stack.pop();
+//            for (int city: roads.adj(current)) {
+//                if (!visited[city]) {
+//                    stack.push(city);
+//                    visited[city] = true;
+//                    parents[city] = current;
+//                }
+//            }
+//        }
+
+        dfs(roads, start, visited, parents);
+
         System.out.printf("From %s we can reach: ", cities[start]);
         for (int i = 0; i < visited.length; i++) {
             if (visited[i] && i != start) {
-                System.out.print(cities[i]+" ");
+                System.out.print(cities[i] + " ");
             }
 
         }
+
+        System.out.printf(isConected(roads,start, end)?
+                "\nPath from %s to %s exists" : "\nPath from %s to %s doesn't exist",
+                cities[start],
+                cities[end]);
+
         if (visited[end]) {
             Stack<Integer> path = new Stack<>();
             path.push(end);
@@ -91,6 +100,36 @@ public class CityPaths {
         } else {
             System.out.println("\nPath did not found!");
         }
+    }
+
+    public static void dfs(Graph G, int current, boolean[] visited, int[] parents) {
+        for (int vertex : G.adj(current)) {
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                parents[vertex] = current;
+                dfs(G, vertex, visited, parents);
+            }
+        }
+    }
+
+    public static boolean isConected(Graph G, int start, int end){
+        return isConected(G, start, end, new boolean[G.V()]);
+    }
+
+    public static boolean isConected(Graph G, int current, int end, boolean[] visited) {
+        if (current == end) {
+            return true;
+        }
+
+        for (int vertex : G.adj(current)) {
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                if(isConected(G, vertex, end, visited)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
