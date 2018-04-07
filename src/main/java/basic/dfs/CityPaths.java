@@ -1,5 +1,7 @@
 package basic.dfs;
 
+import java.util.Stack;
+
 public class CityPaths {
 
     public static final String[] cities = {
@@ -23,7 +25,47 @@ public class CityPaths {
 
     public static void main(String[] args) {
 
-        int fastiv = 5;
+        int start = 8;
+        int end = 0;
+        boolean[] visited = new boolean[roads.length];
+        Stack<Integer> stack = new Stack<>();
+        int[] parents = new int[roads.length];
+
+        stack.push(start);
+        visited[start] = true;
+
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+            for (int city: roads[current]) {
+                if (!visited[city]) {
+                    stack.push(city);
+                    visited[city] = true;
+                    parents[city] = current;
+                }
+            }
+        }
+        System.out.printf("From %s we can reach: ", cities[start]);
+        for (int i = 0; i < visited.length; i++) {
+            if (visited[i] && i != start) {
+                System.out.print(cities[i]+" ");
+            }
+
+        }
+        if (visited[end]) {
+            Stack<Integer> path = new Stack<>();
+            path.push(end);
+
+            while (path.peek() != start) {
+                path.push(parents[path.peek()]);
+            }
+            System.out.printf("\nPath was: ");
+            while (!path.isEmpty()) {
+                System.out.print(cities[path.pop()] + " ");
+            }
+
+        } else {
+            System.out.println("\nPath did not found!");
+        }
     }
 
 }
