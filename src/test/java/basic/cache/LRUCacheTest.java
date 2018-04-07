@@ -32,4 +32,26 @@ public class LRUCacheTest {
 
     }
 
+    @Test
+    public void verifyThatRemoveLeastElementWithGetOperation(){
+        LRUCache<String, Integer> cache = new LRUCache<>(3);
+        cache.put("A", 1);
+        cache.put("B", 2);
+        cache.put("C", 3);
+
+        assertEquals(1, (int)cache.get("A"));
+        assertEquals(2, (int)cache.get("B"));
+        assertEquals(3, (int)cache.get("C"));
+
+        cache.get("A");
+        cache.put("D", 4);
+
+
+        assertNull(cache.get("B"));
+        assertEquals(1, (int)cache.get("A"));
+        assertEquals(3, (int)cache.get("C"));
+        assertEquals(4, (int)cache.get("D"));
+
+    }
+
 }

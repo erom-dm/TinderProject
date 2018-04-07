@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Graph {
 
-    public List<Integer>[] edges;
-    int V;
-    int E;
+    private List<Integer>[] edges;
+    private int V;
+    private int E;
 
     public Graph(int V){
         this.V = V;
@@ -16,6 +16,14 @@ public class Graph {
         for(int i = 0; i < V; i++){
             edges[i] = new ArrayList<>();
         }
+    }
+
+    public int V(){
+        return this.V;
+    }
+
+    public int E(){
+        return this.E;
     }
 
     public void add(int v, int u){

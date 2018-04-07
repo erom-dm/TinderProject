@@ -50,6 +50,7 @@ public class LRUCache<K,V> {
         node.prev = most;
         most.next = node;
         most = node;
+
         if (size == capacity) {
             cach.remove(least.key);
             least = least.next;
@@ -66,6 +67,7 @@ public class LRUCache<K,V> {
         }
 
         Node node = cach.get(key);
+
         if (node == most) {
             return node.value;
         }
