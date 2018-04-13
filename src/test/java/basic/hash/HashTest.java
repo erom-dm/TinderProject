@@ -2,6 +2,8 @@ package basic.hash;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class HashTest {
@@ -25,6 +27,10 @@ public class HashTest {
         assertEquals("99", hash.get(99));
         assertEquals("999", hash.get(999));
         assertEquals(null, hash.get(998));
+
+        for (Entry<Integer,String> e : hash) {
+            System.out.println(e);
+        }
     }
 
 }
