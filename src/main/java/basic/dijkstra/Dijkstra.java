@@ -3,6 +3,7 @@ package basic.dijkstra;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class Dijkstra {
 
@@ -31,21 +32,21 @@ public class Dijkstra {
         return result;
     }
 
-    public static void relax(PriorityQueue<Integer> queue, int[] distTo){
+    public static void relax(PriorityQueue<Integer> queue, int[] distTo, int[] edgeTo){
         int current = queue.poll();
         for (int city : neighbourCities(current)) {
             if (distTo[current] + dists[city][current] < distTo[city]){
                 queue.remove(city);
                 distTo[city] = distTo[current] + dists[city][current];
+                edgeTo[city] = current; //saving parent
                 queue.add(city);
             }
         }
-
     }
 
     public static void main(String[] args) {
 
-        int from = 5;
+        int from = 2;
         int to = 7;
         int[]edgeTo = new int[cities.length];
         int[]distTo = new int[cities.length];
@@ -53,14 +54,27 @@ public class Dijkstra {
         PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> distTo[o1] - distTo[o2]);
         for (int i = 0; i < cities.length; i++) {
             distTo[i] = i == from ? 0 : Integer.MAX_VALUE;
+            edgeTo[i] = i == from ? from : -1;
             queue.add(i);
-
         }
+
         while (!queue.isEmpty()){
-            relax(queue, distTo);
+            relax(queue, distTo, edgeTo);
         }
 
-        System.out.printf("Distanse from %s to %s : %d", cities[from], cities[to], distTo[to]);
+        System.out.printf("Distanse from %s to %s : %d \n", cities[from], cities[to], distTo[to]);
+
+        System.out.printf("Path from %s to %s : \n", cities[from], cities[to]);
+
+        Stack<Integer> stack = new Stack<>();
+        stack.add(to);
+        while(edgeTo[stack.peek()] != from){
+            stack.add(edgeTo[stack.peek()]);
+        }
+        stack.add(from);
+        while(!stack.isEmpty()){
+            System.out.print(cities[stack.pop()] + " ");
+        }
 
     }
 
