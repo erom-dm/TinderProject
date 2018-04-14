@@ -41,45 +41,25 @@ public class Hash<K,V> implements Iterable<Entry<K,V>>{
     }
 
     class IterEntry implements Iterator<Entry<K, V>> {
-        private int mainIndex =0;
-        private Iterator<K> itK;
-        private Iterator<V> itV;
-
-        IterEntry() {
-            updateKeyIterator();
-            updateValIterator();
-        }
-
-        private void updateKeyIterator() {
-            itK = keys.get(mainIndex).iterator();
-        }
-
-        private void updateValIterator() {
-            itV = values.get(mainIndex).iterator();
-        }
+        private Iterator<List<K>> itL = keys.iterator();
+        private Iterator<K> itK = itL.next().iterator();
 
         private void shiftIndex() {
-            if (itK.hasNext()) return;
-
-            while (++mainIndex < keys.size()) {
-                updateKeyIterator();
-                if (itK.hasNext()) {
-                    updateValIterator();
-                    break;
-                }
+            while (itL.hasNext() && !itK.hasNext()) {
+                itK = itL.next().iterator();
             }
         }
 
         @Override
         public boolean hasNext() {
-            return itK.hasNext() || mainIndex < keys.size();
+            return itL.hasNext() || itK.hasNext();
         }
 
         @Override
         public Entry<K, V> next() {
-            Entry e = new Entry<>(itK.next(), itV.next());
+            K key =itK.next();
             shiftIndex();
-            return e;
+            return new Entry<>(key, get(key));
         }
     }
 }
