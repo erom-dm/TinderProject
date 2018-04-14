@@ -19,16 +19,24 @@ public class HashTest {
         hash.put(217,"CAT");
         hash.put(666,"DOG");
         hash.put(999999157,"HELL ;)");
-
+        // get test
         assertEquals("ABC", hash.get(15));
         assertEquals("HELL ;)", hash.get(999999157));
         assertEquals("CAT", hash.get(217));
         assertEquals("10", hash.get(10));
         assertEquals("99", hash.get(99));
-        assertEquals("999", hash.get(999));
-        assertEquals(null, hash.get(998));
-
-        for (Entry<Integer,String> e : hash) {
+        // update value if equal key given test
+        assertEquals("9991", hash.get(999));
+        // get if null expected test
+        assertNull(hash.get(998));
+        // contains test
+        assertTrue(hash.containsKey(999999157));
+        assertFalse(hash.containsKey(999999158));
+        // remove test
+        hash.remove(999);
+        assertNull(hash.get(999));
+        // iterator test
+        for (Entry<Integer, String> e : hash) {
             System.out.println(e);
         }
     }

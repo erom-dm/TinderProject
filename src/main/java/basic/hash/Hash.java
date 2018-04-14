@@ -18,9 +18,14 @@ public class Hash<K,V> implements Iterable<Entry<K,V>>{
 
     public void put(K key, V value) {
         int index = hash(key);
-
-        keys.get(index).add(key);
-        values.get(index).add(value);
+        List<K> kl = keys.get(index);
+        int index2 = kl.indexOf(key);
+        if (index2 == -1) { // no key, clean insert
+            kl.add(key);
+            values.get(index).add(value);
+        } else { // key present, just update update
+            values.get(index).set(index2, value);
+        }
     }
 
     public V get(K key) {
@@ -29,6 +34,20 @@ public class Hash<K,V> implements Iterable<Entry<K,V>>{
         int indexRow = keys.get(index).indexOf(key);
         return indexRow!=-1 ?
                 values.get(index).get(indexRow) : null;
+    }
+
+    public boolean containsKey(K key){
+        return keys.get(hash(key)).indexOf(key) != -1;
+    }
+
+    public void remove(K key){
+        int hash = hash(key);
+        List kl = keys.get(hash);
+        if (kl.indexOf(key) != -1) {
+            int index = kl.indexOf(key);
+            kl.remove(index);
+            values.get(hash).remove(index);
+        }
     }
 
     private int hash(K key) {
