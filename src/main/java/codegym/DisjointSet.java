@@ -1,11 +1,10 @@
 package codegym;
 
 public class DisjointSet {
-    public int[] joints;
+    private int[] joints;
 
     DisjointSet(int N) {
         joints = new int[N];
-        //basic initialisation
         clear();
     }
 
@@ -16,9 +15,13 @@ public class DisjointSet {
     }
 
     public void union(int i, int j){
-        int root = Math.min(root(i), root(j));
-        int tail = Math.max(root(i), root(j));
+        int root = Math.min(joints[i], joints[j]);
+        int tail = Math.max(joints[i], joints[j]);
         replace(root, tail);
+    }
+
+    public boolean find(int i, int j){
+        return joints[i] == joints[j];
     }
 
     private void replace(int src, int dst) {
@@ -27,13 +30,5 @@ public class DisjointSet {
                 joints[i] = dst;
             }
         }
-    }
-
-    public boolean find(int i, int j){
-        return root(i) == root(j);
-    }
-
-    private int root(int i){
-        return joints[i];
     }
 }
