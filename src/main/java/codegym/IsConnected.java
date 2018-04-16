@@ -22,12 +22,6 @@ public class IsConnected {
             replace(root, tail);
         }
 
-        public void union_2(int from, int to) {
-            int rootFrom = root2(from);
-            int rootTo = root2(to);
-            joints[rootFrom]=rootTo;
-        }
-
         private void replace(int src, int dst) {
             for (int i = 0; i < joints.length; i++) {
                 if(joints[i] == src){
@@ -43,14 +37,6 @@ public class IsConnected {
         private int root(int i){
             return joints[i];
         }
-
-        private int root2(int k) {
-            while(joints[k] != k){
-                k=joints[k];
-            }
-            return k;
-        }
-
     }
 
     public static String scannerData() {
@@ -89,7 +75,9 @@ public class IsConnected {
         DS ds = new DS(N);
         // read data
         for(int i = 0; i < M; i++){
-            ds.union(in.nextInt(),in.nextInt());
+            int i1 = in.nextInt();
+            int i2 = in.nextInt();
+            ds.union(i1,i2);
         }
         // check whether the vertex are connected.
         int L = in.nextInt();
