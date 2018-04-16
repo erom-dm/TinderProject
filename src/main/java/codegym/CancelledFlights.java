@@ -3,13 +3,22 @@ package codegym;
 import java.util.*;
 
 public class CancelledFlights {
-    final int FROM=0;
-    final int TO=1;
+    private final int FROM=0;
+    private final int TO=1;
     private DisjointSet joints;
     private int[][] flights;
     private boolean[] cancelled;
+    private Scanner in = new Scanner(System.in);
 
-    private void readFlights() {
+    private void readFlightsToArray() {
+        for (int i = 0; i < flights.length; i++) {
+            this.flights[i][this.FROM]=in.nextInt();
+            this.flights[i][this.TO]=in.nextInt();
+        }
+        this.flightsToDisjoints();
+    }
+
+    private void flightsToDisjoints() {
         joints.clear();
         for (int i = 0; i < flights.length; i++) {
             if (!cancelled[i]) {
@@ -20,6 +29,7 @@ public class CancelledFlights {
 
     private void cancel(int index) {
         cancelled[index]=true;
+        this.flightsToDisjoints();
     }
 
     private boolean isConnected(int src, int dst) {
@@ -29,28 +39,22 @@ public class CancelledFlights {
     public static void main(String[] args) {
         CancelledFlights cf = new CancelledFlights();
 
-        Scanner in = new Scanner(System.in);
-        int A = in.nextInt();
-        int F = in.nextInt();
+        int A = cf.in.nextInt();
+        int F = cf.in.nextInt();
         cf.flights = new int[F][2];
         cf.cancelled = new boolean[F];
         cf.joints = new DisjointSet(A);
         // read flights to array
-        for (int i = 0; i < F; i++) {
-            cf.flights[i][cf.FROM]=in.nextInt();
-            cf.flights[i][cf.TO]=in.nextInt();
-        }
-        cf.readFlights();
+        cf.readFlightsToArray();
         // read test
-        while (in.hasNext()) {
-            String command = in.next();
+        while (cf.in.hasNext()) {
+            String command = cf.in.next();
             if ("cancel".equals(command)) {
-                int flight = in.nextInt();
+                int flight = cf.in.nextInt();
                 cf.cancel(flight);
-                cf.readFlights();
             } else {
-                int from = in.nextInt();
-                int to = in.nextInt();
+                int from = cf.in.nextInt();
+                int to = cf.in.nextInt();
                 System.out.println(cf.isConnected(from, to)?"true":"false");
             }
         }
