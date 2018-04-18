@@ -37,7 +37,7 @@ public class IsConnected {
         );
         int N = in.nextInt();
         int M = in.nextInt();
-        DisjointSet ds = new DisjointSet(N);
+        DisjointSet2 ds = new DisjointSet2(N);
         // read data
         for(int i = 0; i < M; i++){
             int i1 = in.nextInt();
