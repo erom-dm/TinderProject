@@ -9,8 +9,8 @@ public class Solution_KahnAlgorithm {
     }
 
     public static class Graph {
-        private int E,V;
-        private Set<Integer>[] adjacent;
+        int E,V;
+        Set<Integer>[] adjacent;
 
         Graph(int V){
             this.V = V;
@@ -62,6 +62,25 @@ public class Solution_KahnAlgorithm {
         topologicalSort(graph);
     }
 
+    private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
+        // TODO
+        return true;
+    }
+
+    private static void removeEdge(Graph graph, Integer nodeN, Integer nodeM) {
+        // TODO
+    }
+
+    private static boolean graphHasEdges(Graph graph) {
+        // TODO
+        return false;
+    }
+
+    private static Set<Integer> findStarts(Graph graph) {
+        // TODO
+        return null;
+    }
+
     public static String topologicalSort(Graph graph) {
         // Empty list that will contain the sorted elements
         ArrayList<Integer> L = new ArrayList<>();
@@ -84,24 +103,6 @@ public class Solution_KahnAlgorithm {
         } else {
             return L.stream().map(Solution_KahnAlgorithm::intToStr).collect(Collectors.joining(" "));
         }
-    }
-
-    private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
-        // TODO
-        return true;
-    }
-
-    private static void removeEdge(Graph graph, Integer nodeN, Integer nodeM) {
-        // TODO
-    }
-
-    private static boolean graphHasEdges(Graph graph) {
-        return graph.E > 0;
-    }
-
-    private static Set<Integer> findStarts(Graph graph) {
-        // TODO
-        return null;
     }
 
 }
