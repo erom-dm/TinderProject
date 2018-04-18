@@ -59,7 +59,7 @@ public class Solution_KahnAlgorithm {
 
         Scanner in = new Scanner(input);
         Graph graph = readGraph(in);
-        topologicalSort(graph);
+        System.out.println(topologicalSort(graph));;
     }
 
     private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
