@@ -63,27 +63,40 @@ public class Solution_KahnAlgorithm {
     }
 
     private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
-        // TODO
+        for (int i = 0; i < graph.V(); i++) {
+            for (int edj : graph.adj(i)) {
+                if (edj == nodeM) return false;
+            }
+        }
         return true;
     }
 
     private static void removeEdge(Graph graph, Integer nodeN, Integer nodeM) {
-        // TODO
-    }
-
-    private static boolean graphHasEdges(Graph graph) {
-        // TODO
-        return false;
+        //for (int node : graph.adj(nodeN) ){
+        //    if (node == nodeM) {
+                graph.adjacent[nodeN].remove(nodeM);
+                graph.E--;
+        //    }
+        //}
     }
 
     private static Set<Integer> findStarts(Graph graph) {
-        // TODO
-        return null;
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < graph.V() ; i++) {
+            if (hasNoIncoming(graph, i)) {
+                set.add(i);
+            }
+        }
+        return set;
+    }
+
+    private static boolean graphHasEdges(Graph graph) {
+        return graph.E()>0;
     }
 
     public static String topologicalSort(Graph graph) {
         // Empty list that will contain the sorted elements
-        ArrayList<Integer> L = new ArrayList<>();
+        List<Integer> L = new ArrayList<>();
         Set<Integer> S = findStarts(graph);
         while (!S.isEmpty()) {
             for (Integer nodeN : S) {
