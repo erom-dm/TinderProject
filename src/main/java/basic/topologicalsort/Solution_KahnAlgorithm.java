@@ -59,11 +59,7 @@ public class Solution_KahnAlgorithm {
 
         Scanner in = new Scanner(input);
         Graph graph = readGraph(in);
-        List<Integer> L = kahn(graph);
-        for (int i = 0; i < L.size(); i++) {
-            System.out.print(L.get(i)+" ");
-        }
-        System.out.println();
+        topologicalSort(graph);
     }
 
     public static String topologicalSort(Graph graph) {
