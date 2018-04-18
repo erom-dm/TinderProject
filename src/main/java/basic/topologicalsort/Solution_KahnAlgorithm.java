@@ -1,7 +1,12 @@
 package basic.topologicalsort;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution_KahnAlgorithm {
+
+    private static String intToStr(Integer n) {
+        return Integer.toString(n);
+    }
 
     public static class Graph {
         private int E,V;
@@ -33,8 +38,7 @@ public class Solution_KahnAlgorithm {
 
     }
 
-    public static Graph readGraph(){
-        Scanner in = new Scanner(System.in);
+    public static Graph readGraph(Scanner in){
         int V = in.nextInt();
         int E = in.nextInt();
         Graph graph = new Graph(V);
@@ -45,7 +49,16 @@ public class Solution_KahnAlgorithm {
     }
 
     public static void main(String[] args) {
-        Graph graph =  readGraph();
+        String input = "4 6\n" +
+                "0 2\n" +
+                "0 3\n" +
+                "0 1\n" +
+                "1 3\n" +
+                "1 2\n" +
+                "3 2";
+
+        Scanner in = new Scanner(input);
+        Graph graph = readGraph(in);
         List<Integer> L = kahn(graph);
         for (int i = 0; i < L.size(); i++) {
             System.out.print(L.get(i)+" ");
@@ -53,40 +66,46 @@ public class Solution_KahnAlgorithm {
         System.out.println();
     }
 
-    private static Set<Integer> findWithNoIncoming(Graph graph) {
-        // TODO
-        return null;
-    }
-
-    private static boolean mHasNoOtherIncomingEdges(int nodeM) {
-        // TODO
-        return false;
-    }
-
-    private static Set<Integer> getOutcgoingNodes(int node) {
-        // TODO
-        return null;
-    }
-
-    private static void removeEdgeFromGraph(int node, int nodeM) {
-        // TODO
-    }
-
-    private static List<Integer> kahn(Graph graph) {
-        List<Integer> L = new ArrayList<>();
-        Set<Integer> S = findWithNoIncoming(graph);
+    public static String topologicalSort(Graph graph) {
+        // Empty list that will contain the sorted elements
+        ArrayList<Integer> L = new ArrayList<>();
+        Set<Integer> S = findStarts(graph);
         while (!S.isEmpty()) {
-            for (int node : S) {
-                S.remove(node);
-                L.add(node);
-                for (int nodeM : getOutcgoingNodes(node)) {
-                    removeEdgeFromGraph(node, nodeM);
-                    if (mHasNoOtherIncomingEdges(nodeM)) {
+            for (Integer nodeN : S) {
+                S.remove(nodeN);
+                L.add(nodeN);
+                Integer[] nodesFromN = graph.adj(nodeN);
+                for (Integer nodeM : nodesFromN) {
+                    removeEdge(graph, nodeN, nodeM);
+                    if (hasNoIncoming(graph, nodeM)) {
                         S.add(nodeM);
                     }
                 }
             }
         }
-        return L;
+        if (graphHasEdges(graph)) {
+            return "graph has at least one cycle";
+        } else {
+            return L.stream().map(Solution_KahnAlgorithm::intToStr).collect(Collectors.joining(" "));
+        }
     }
+
+    private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
+        // TODO
+        return true;
+    }
+
+    private static void removeEdge(Graph graph, Integer nodeN, Integer nodeM) {
+        // TODO
+    }
+
+    private static boolean graphHasEdges(Graph graph) {
+        return graph.E > 0;
+    }
+
+    private static Set<Integer> findStarts(Graph graph) {
+        // TODO
+        return null;
+    }
+
 }
