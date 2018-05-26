@@ -40,6 +40,7 @@ public class StreamSample {
     public static void m3() {
         int[] ii = {1,2,7,4,3,8,7};
         OptionalInt min = Arrays.stream(ii)
+                //.parallel()
                 .filter(StreamSample::test5)
                 .min();
         //.forEach(System.out::println);
