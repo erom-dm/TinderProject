@@ -36,7 +36,8 @@ public class Database {
 
     private Person generateNewPerson() {
         int id = generateValueFromRange(rangeMin, rangeMax);
-        String name = names[generateValueFromRange(0,arraySize)] + " " + surNames[generateValueFromRange(0,arraySize)];
+        String name = names[generateValueFromRange(0,arraySize)];
+        //+ " " + surNames[generateValueFromRange(0,arraySize)];
         int salary = generateValueFromRange(salaryMin, salaryMax);
         int beginYear = generateValueFromRange(yearMin, yearMax);
         return new PersonSimple(id, name, salary, beginYear);
