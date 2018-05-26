@@ -1,6 +1,8 @@
 package testing;
 
-public class PersonSimple implements Person {
+import java.util.function.Supplier;
+
+public class PersonSimple implements Person, Supplier<Person> {
     private final int id;
     private final String name;
     private final int salary;
@@ -36,5 +38,20 @@ public class PersonSimple implements Person {
     @Override
     public String toString() {
         return String.format("%d %-18s %d %d",this.id, this.name, this.salary, this.beginYear);
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.name.compareTo(o.name());
+    }
+
+    @Override
+    public void printIt() {
+        System.out.println(this);
+    }
+
+    @Override
+    public Person get() {
+        return this;
     }
 }
