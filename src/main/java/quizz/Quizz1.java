@@ -1,6 +1,6 @@
 package quizz;
 
-public class Quzz1 {
+public class Quizz1 {
     public static void main(String[] args) {
         String s="Apple "+
                 "costs " +
