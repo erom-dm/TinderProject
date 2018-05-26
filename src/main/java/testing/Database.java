@@ -26,7 +26,7 @@ public class Database {
         return min + val;
     }
 
-    List<Person> get() {
+    public List<Person> get() {
         ArrayList<Person> people = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             people.add(generateNewPerson());
