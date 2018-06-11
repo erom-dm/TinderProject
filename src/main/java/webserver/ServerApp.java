@@ -6,9 +6,10 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class ServerApp {
     public static void main_explained(String[] args) throws Exception {
+        DatabaseHashMap base = new DatabaseHashMap();
         Server s = new Server(8001);
         ServletContextHandler h = new ServletContextHandler();
-        ServletA svA = new ServletA();
+        ServletA svA = new ServletA(base);
         ServletHolder svh = new ServletHolder(svA);
         h.addServlet(svh,"/a");
         s.setHandler(h);
@@ -17,9 +18,11 @@ public class ServerApp {
     }
 
     public static void main(String[] args) throws Exception {
+        Database base = new DatabaseHashMap();
         new Server(8001) {{
             setHandler(new ServletContextHandler() {{
-                           addServlet(new ServletHolder(new ServletA()),"/a");
+                           addServlet(new ServletHolder(new ServletA(base)) ,"/a/*");
+                           addServlet(new ServletHolder(new ServletB(base)),"/b/*");
                        }}
             );
             start();
