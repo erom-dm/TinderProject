@@ -18,7 +18,7 @@ public class ServerApp {
     }
 
     public static void main(String[] args) throws Exception {
-        Database base = new DatabaseHashMap();
+        Database base = new DatabaseAmazonRDS();
         new Server(8001) {{
             setHandler(new ServletContextHandler() {{
                            addServlet(new ServletHolder(new ServletA(base)) ,"/a/*");

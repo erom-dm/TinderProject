@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1>
-    Welcome ${user}<#if user == "Alex">, our favourite teacher</#if>!
+    Welcome ${user}!
 </h1>
 <p>getRequestUrl(): <i>${requrl}</i>
 <p>getRequestURI(): <i>${path}</i>
