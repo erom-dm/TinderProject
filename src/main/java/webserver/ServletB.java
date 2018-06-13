@@ -15,7 +15,8 @@ public class ServletB extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        base.put(1,"hello");
-        super.doGet(req, resp);
+        String s = base.get(0);
+        base.put(0, "the value modified from servletB");
+        resp.getWriter().write(s);
     }
 }

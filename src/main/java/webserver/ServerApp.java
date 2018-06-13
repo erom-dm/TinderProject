@@ -18,7 +18,8 @@ public class ServerApp {
     }
 
     public static void main(String[] args) throws Exception {
-        Database base = new DatabaseAmazonRDS();
+        Database base = new DatabaseHashMap();
+        base.put(0,"Value modified from main");
         new Server(8001) {{
             setHandler(new ServletContextHandler() {{
                            addServlet(new ServletHolder(new ServletA(base)) ,"/a/*");
