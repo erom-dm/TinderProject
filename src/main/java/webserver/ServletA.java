@@ -48,6 +48,10 @@ public class ServletA extends HttpServlet{
 
         try {
             template.process(model, out);
+            String s = base.get(0);
+            base.put(0, "the value modified from servletA");
+            resp.getWriter().write(s);
+
         } catch (TemplateException e) {
             e.printStackTrace();
         }
