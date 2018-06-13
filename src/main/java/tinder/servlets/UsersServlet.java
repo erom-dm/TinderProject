@@ -34,12 +34,16 @@ public class UsersServlet extends HttpServlet{
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-//        Writer out = resp.getWriter();
-//        out.write("Hello World!");
-
-        //
         Template template = cfg.getTemplate("test-like-page.html");
         resp.getWriter().write(template.toString());
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+
 
     }
 }
