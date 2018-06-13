@@ -18,10 +18,10 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class usersServlet extends HttpServlet{
+public class UsersServlet extends HttpServlet{
     //private final Database base;
 
-    /*public usersServlet(Database base) {
+    /*public UsersServlet(Database base) {
         this.base = base;
     }*/
 
