@@ -28,15 +28,18 @@ public class usersServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-        cfg.setDirectoryForTemplateLoading(new File("./src/main/java/webserver/templates"));
+        cfg.setDirectoryForTemplateLoading(new File("./src/main/java/tinder/templates"));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-        Writer out = resp.getWriter();
-        out.write("Hello World!");
+//        Writer out = resp.getWriter();
+//        out.write("Hello World!");
 
+        //
+        Template template = cfg.getTemplate("test-like-page.html");
+        resp.getWriter().write(template.toString());
 
     }
 }
