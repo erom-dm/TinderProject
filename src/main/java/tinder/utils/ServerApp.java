@@ -25,7 +25,7 @@ public class ServerApp {
             setHandler(new ServletContextHandler() {{
                            addServlet(new ServletHolder(new UsersServlet(base, userList)) ,"/users");
                            addServlet(new ServletHolder(new CssServlet()),"/static/*");
-                           addServlet(new ServletHolder(new PeopleListServlet(base, userList)) ,"/test");
+                           addServlet(new ServletHolder(new PeopleListServlet(base, userList)) ,"/liked");
                        }}
             );
             start();

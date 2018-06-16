@@ -43,7 +43,7 @@ public class UsersServlet extends HttpServlet{
         if(userStorage.getFirstUnseen() != null) {
             model.put("ul_user", userStorage.getFirstUnseen());
         }else{
-            resp.sendRedirect("/test");
+            resp.sendRedirect("/liked");
         }
 
         /*for(int i = 0; i < userStorage.size(); i++){
