@@ -4,7 +4,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import webserver.Database;
+import tinder.models.Database;
+import tinder.models.Opinion;
+import tinder.models.Storage;
+import tinder.models.User;
 import webserver.RemoteData;
 import webserver.entities.Product;
 
@@ -19,11 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UsersServlet extends HttpServlet{
-    //private final Database base;
+    private final Database base;
+    private final Storage userStorage;
 
-    /*public UsersServlet(Database base) {
+    public UsersServlet(tinder.models.Database base, tinder.models.Storage userStorage) {
         this.base = base;
-    }*/
+        this.userStorage = userStorage;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,16 +39,41 @@ public class UsersServlet extends HttpServlet{
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-        Template template = cfg.getTemplate("test-like-page.html");
-        resp.getWriter().write(template.toString());
+        Map<String, Object> model = new HashMap<>();
+        if(userStorage.getFirstUnseen() != null) {
+            model.put("ul_user", userStorage.getFirstUnseen());
+        }else{
+            resp.sendRedirect("/test");
+        }
+
+        /*for(int i = 0; i < userStorage.size(); i++){
+            model.put(Integer.toString(i), userStorage.get(i));
+        }*/
+
+        Template template = cfg.getTemplate("like-page.html");
+        Writer out = resp.getWriter();
+
+        try {
+            template.process(model, out);
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("likeButton");
+        if(name.equals("like")){
+            User current = userStorage.getFirstUnseen();
+            current.setLiked(true);
+            current.setSeen(true);
+        }else if (name.equals("dislike")){
+            User current = userStorage.getFirstUnseen();
+            current.setLiked(false);
+            current.setSeen(true);
+        }
 
-
-
-
+        resp.sendRedirect("/users");
     }
 }
