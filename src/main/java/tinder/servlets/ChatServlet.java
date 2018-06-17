@@ -2,10 +2,9 @@ package tinder.servlets;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.UserStorage;
-import tinder.models.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,16 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-
-public class PeopleListServlet extends HttpServlet {
+public class ChatServlet extends HttpServlet {
     private final UserStorage userStorage;
 
-    public PeopleListServlet(UserStorage userStorage) {
+    public ChatServlet(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
@@ -35,31 +29,9 @@ public class PeopleListServlet extends HttpServlet {
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-        Map<String, Object> model = new HashMap<>();
-        List<User> likedUsers = new ArrayList<>();
-        for (User u : userStorage) {
-            if(u.isLiked()){
-                likedUsers.add(u);
-            }
-        }
-        model.put("likedUsers", likedUsers);
-
-        Template template = cfg.getTemplate("people-list.html");
+        Template template = cfg.getTemplate("chat.html");
         Writer out = resp.getWriter();
+        resp.getWriter().write(template.toString());
 
-        try {
-            template.process(model, out);
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("backButton");
-        if(name.equals("back")){
-            resp.sendRedirect("/users");
-        }
     }
 }

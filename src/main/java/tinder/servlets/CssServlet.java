@@ -44,7 +44,7 @@ public class CssServlet extends HttpServlet {
 
         // "static/css/bootstrap.min.css" - incoming URI example
         // InterfaceDAO css file name from incoming URI
-        String cssReqString = req.getRequestURI().replace("static/css/", "");
+        String cssReqString = req.getRequestURI().replace("/static/css/", "");
         Template template = cfg.getTemplate(cssReqString);
         resp.getWriter().write(template.toString());
     }
