@@ -21,7 +21,7 @@ public class CssServlet extends HttpServlet {
         String url = req.getPathInfo();
         if (url!=null) {
             // input
-            Path in = Paths.get("./src/main/java/tinder/templates/css", url);
+            Path in = Paths.InterfaceDAO("./src/main/java/tinder/templates/css", url);
             // set the type for downloading ability instead of plain show in the browser window.
             resp.setContentType("application/octet-stream");
             resp.setHeader("Content-Disposition",String.format("attachment; filename=\"%s\"", in.getFileName().toString()));
@@ -43,7 +43,7 @@ public class CssServlet extends HttpServlet {
         cfg.setWrapUncheckedExceptions(true);
 
         // "static/css/bootstrap.min.css" - incoming URI example
-        // get css file name from incoming URI
+        // InterfaceDAO css file name from incoming URI
         String cssReqString = req.getRequestURI().replace("static/css/", "");
         Template template = cfg.getTemplate(cssReqString);
         resp.getWriter().write(template.toString());

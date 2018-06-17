@@ -1,10 +1,13 @@
-package tinder.models;
+package tinder.dao;
 
+import tinder.dao.InterfaceDAO;
+
+import tinder.models.User;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class UserStorage implements Storage, Iterable<User> {
+public class UserStorage implements InterfaceDAO<User>, Iterable<User> {
     private final List<User> data = new ArrayList<>();
 
     @Override
@@ -32,24 +35,37 @@ public class UserStorage implements Storage, Iterable<User> {
     }
 
     @Override
-    public void put(User user) {
+    public User get(int pk) {
+        return this.data.get(pk);
+    }
+
+    @Override
+    public void save(User user) {
         this.data.add(user);
     }
 
     @Override
-    public User get(int userId) {
-        return this.data.get(userId);
+    public void update(User object){
+        for(User u:this.data){
+            if(u.getUserId() == object.getUserId()){
+                this.data.remove(u);
+                this.data.add(object);
+            }
+        }
     }
 
     @Override
+    public void delete(int pk) {
+
+    }
+
     public int size(){
         return this.data.size();
     }
 
-    @Override
     public User getFirstUnseen(){
         for (User user:data) {
-            if(user.seen){
+            if(user.isSeen()){
                 continue;
             }
             else{
@@ -58,4 +74,5 @@ public class UserStorage implements Storage, Iterable<User> {
         }
         return null;
     }
+
 }

@@ -5,15 +5,14 @@ public class User {
     private String userName;
     private String userPicURL;
     private String gender;
-    boolean liked;
-    boolean seen = false;
+    private boolean liked;
+    private boolean seen = false;
 
     public User(int id, String userName, String gender, String userPic){
         this.userId = id;
         this.userName = userName;
         this.userPicURL = userPic;
         this.gender = gender;
-
     }
 
     public String getGender() {
