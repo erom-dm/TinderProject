@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import tinder.dao.UserStorage;
 import tinder.models.Database;
 import tinder.models.Opinion;
 import tinder.models.Storage;
@@ -22,11 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UsersServlet extends HttpServlet{
-    private final Database base;
-    private final Storage userStorage;
+    private final UserStorage userStorage;
 
-    public UsersServlet(tinder.models.Database base, tinder.models.Storage userStorage) {
-        this.base = base;
+    public UsersServlet(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
@@ -47,7 +46,7 @@ public class UsersServlet extends HttpServlet{
         }
 
         /*for(int i = 0; i < userStorage.size(); i++){
-            model.put(Integer.toString(i), userStorage.get(i));
+            model.put(Integer.toString(i), userStorage.InterfaceDAO(i));
         }*/
 
         Template template = cfg.getTemplate("like-page.html");
