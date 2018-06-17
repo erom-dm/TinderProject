@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import tinder.dao.UserStorage;
 import tinder.models.*;
+import tinder.servlets.ChatServlet;
 import tinder.servlets.CssServlet;
 import tinder.servlets.PeopleListServlet;
 import tinder.servlets.UsersServlet;
@@ -26,6 +27,7 @@ public class ServerApp {
                            addServlet(new ServletHolder(new UsersServlet(userList)) ,"/users");
                            addServlet(new ServletHolder(new CssServlet()),"/static/*");
                            addServlet(new ServletHolder(new PeopleListServlet(userList)) ,"/liked");
+                           addServlet(new ServletHolder(new ChatServlet(userList)) ,"/messages/*");
                        }}
             );
             start();

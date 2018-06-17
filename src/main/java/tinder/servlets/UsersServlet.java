@@ -71,6 +71,8 @@ public class UsersServlet extends HttpServlet{
             User current = userStorage.getFirstUnseen();
             current.setLiked(false);
             current.setSeen(true);
+        }else if (name.equals("toLiked")){
+            resp.sendRedirect("/liked");
         }
 
         resp.sendRedirect("/users");
