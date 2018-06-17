@@ -5,12 +5,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.UserStorage;
-import tinder.models.Database;
-import tinder.models.Opinion;
-import tinder.models.Storage;
 import tinder.models.User;
-import webserver.RemoteData;
-import webserver.entities.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

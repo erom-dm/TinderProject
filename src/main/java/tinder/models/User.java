@@ -8,6 +8,9 @@ public class User {
     private boolean liked;
     private boolean seen = false;
 
+    public User() {
+    }
+
     public User(int id, String userName, String gender, String userPic){
         this.userId = id;
         this.userName = userName;
