@@ -23,19 +23,21 @@
             <div class="panel panel-default user_panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">Liked People List</h3>
-                    <form name="goBack" method="post">
-                        <button name="backButton" type=submit value="back"> Back to swiping</button>
-                    </form>
+                        <form name="goBack" method="post">
+                            <button name="backButton" type=submit value="back"> Back to swiping</button>
+                        </form>
+
                 </div>
                 <div class="panel-body">
                     <div class="table-container">
                         <table class="table-users table" border="0">
                             <tbody>
                                 <#list likedUsers as user>
+                                <#assign userName>${user.userName?replace(" ", "")}</#assign>
                                     <tr>
                                         <td width="10">
                                             <div class="avatar-img">
-                                                <img class="img-circle" src=${user.userPicURL} />  
+                                                <a href="/messages/${userName}"><img class="img-circle" src=${user.userPicURL} /> </a>
                                             </div>
 
                                         </td>
