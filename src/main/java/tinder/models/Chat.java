@@ -22,5 +22,10 @@ public class Chat {
     //public void setData(Message message) {
      //   this.data.add(message);
     //}
+    
+    public void addMessage(Message msg){
+        //msg.setMessageId(idGenerator());
+        this.data.add(msg);
+    }
 
 }
