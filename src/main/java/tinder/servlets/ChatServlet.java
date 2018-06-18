@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import javax.servlet.http.Cookie;
 
 public class ChatServlet extends HttpServlet {
     private final UserStorage userStorage;
@@ -42,5 +43,22 @@ public class ChatServlet extends HttpServlet {
         }
         
         //TODO cookies. Get logged in user ID and second user ID -> load appropriate chat data into the freemarker.
+        //https://www.javatpoint.com/cookies-in-servlet
+        
+        //Cookie ck=new Cookie("user","sonoo jaiswal")  - create new cookie
+        //resp.addCookie(ck);  - add cookie to server response
+        //Cookie ck=new Cookie("user","");//deleting value of cookie  
+        //ck.setMaxAge(0);//changing the maximum age to 0 seconds  
+        //resp.addCookie(ck);//adding cookie in the response
+        
+        //Cookie ck[]=req.getCookies();  - how to get all the cookies
+        //for(int i=0;i<ck.length;i++){  
+        //  out.print("<br>"+ck[i].getName()+" "+ck[i].getValue());//printing name and value of cookie  
+        //} 
+        
+        
+        //public void addCookie(Cookie ck):method of HttpServletResponse interface is used to add cookie in response object.
+        //public Cookie[] getCookies()    :method of HttpServletRequest interface is used to return all the cookies from the browser.
+       
     }
 }
