@@ -19,7 +19,7 @@ public class Chat {
         //return data;
     //}
     
-    //public void setChatID(Message message) {
+    //public void setData(Message message) {
      //   this.data.add(message);
     //}
 
