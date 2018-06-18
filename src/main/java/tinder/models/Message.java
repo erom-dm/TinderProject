@@ -5,7 +5,12 @@ public class Message {
      private int messageId;
      private String text;
      private String time;
-
+     
+    public Message(int userId, String text, String time){
+         this.userId = userId;
+         this.text = text;
+         this.time = time;
+    }
     public int getUserId() {
         return userId;
     }
