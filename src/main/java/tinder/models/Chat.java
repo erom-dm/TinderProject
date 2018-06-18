@@ -1,5 +1,6 @@
 package tinder.models;
 
+import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +42,9 @@ public class Chat {
     }
     
     /*public int generateChatId(int userId1, int userId2){
-        TODO: generate unique chat ID based on user IDs (or time). 
-        
+        UUID idOne = UUID.randomUUID();
+        System.out.println(String.valueOf(idOne));
+        TODO: generate unique chat ID based on user IDs (or time).   
     }*/
 
 }
