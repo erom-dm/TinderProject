@@ -1,4 +1,4 @@
-package tinder.dao;
+/*package tinder.dao;
 
 import tinder.models.User;
 
@@ -89,4 +89,4 @@ public class ChatDAO implements InterfaceDAO<Chat> {
         }
     }
 
-}
+}*/
