@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PeopleListServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
     private final UserStorage userStorage;
 
-    public PeopleListServlet(UserStorage userStorage) {
+    public LoginServlet(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
@@ -36,23 +36,10 @@ public class PeopleListServlet extends HttpServlet {
         cfg.setWrapUncheckedExceptions(true);
 
         Map<String, Object> model = new HashMap<>();
-        List<User> likedUsers = new ArrayList<>();
-        for (User u : userStorage) {
-            if(u.isLiked()){
-                likedUsers.add(u);
-            }
-        }
-        model.put("likedUsers", likedUsers);
 
         Template template = cfg.getTemplate("people-list.html");
         Writer out = resp.getWriter();
-
-        try {
-            template.process(model, out);
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        }
-
+        
     }
 
     @Override
