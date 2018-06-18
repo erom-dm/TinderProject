@@ -28,10 +28,11 @@ public class ChatServlet extends HttpServlet {
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
-
+    
         Template template = cfg.getTemplate("chat.html");
         Writer out = resp.getWriter();
         resp.getWriter().write(template.toString());
-
+        
+        //TODO cookies. Get logged in user ID and second user ID -> load appropriate chat data into the freemarker.
     }
 }
