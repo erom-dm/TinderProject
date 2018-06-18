@@ -27,5 +27,17 @@ public class Chat {
         //msg.setMessageId(idGenerator());
         this.data.add(msg);
     }
+    
+    public int generateMessageId(){
+        int id;
+        for(Message msg:this.data){
+            id = msg.getMessageId();
+        }
+        if (id == null){
+            id = 0;
+            return id;
+        }
+        return id++;
+    }
 
 }
