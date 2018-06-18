@@ -24,7 +24,7 @@ public class Chat {
     //}
     
     public void addMessage(Message msg){
-        //msg.setMessageId(idGenerator());
+        msg.setMessageId(this.generateMessageId());
         this.data.add(msg);
     }
     
