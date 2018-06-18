@@ -6,7 +6,16 @@ import java.util.List;
 
 public class Chat {
     private int chatID;
-    private List<Message> data = new ArrayList<>();
+    private int user1ID;
+    private int user2ID;
+    private List<Message> data;
+    
+    public Chat(int user1ID, int user2ID){
+        this.chatID = generate unique ID;
+        this.user1ID = user1ID;
+        this.user2ID = user2ID;
+        private List<Message> data = new ArrayList<>();
+    }
 
     public int getChatID() {
         return chatID;
