@@ -11,10 +11,10 @@ public class Chat {
     private List<Message> data;
     
     public Chat(int user1ID, int user2ID){
-        this.chatID = generate unique ID;
+        //this.chatID = generate unique ID;
         this.user1ID = user1ID;
         this.user2ID = user2ID;
-        private List<Message> data = new ArrayList<>();
+        List<Message> data = new ArrayList<>();
     }
 
     public int getChatID() {
@@ -39,11 +39,11 @@ public class Chat {
     }
     
     public int generateMessageId(){
-        int id;
+        int id = -1;
         for(Message msg:this.data){
             id = msg.getMessageId();
         }
-        if (id == null){
+        if (id == -1){
             id = 0;
             return id;
         }

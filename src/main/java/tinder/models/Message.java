@@ -3,6 +3,7 @@ package tinder.models;
 public class Message {
      private int userId;
      private int messageId;
+     private int chatRoomId;
      private String text;
      private String time;
      
