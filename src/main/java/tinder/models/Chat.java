@@ -14,5 +14,13 @@ public class Chat {
     public void setChatID(int chatID) {
         this.chatID = chatID;
     }
+    
+    //public List<Message> getData() {
+        //return data;
+    //}
+    
+    //public void setChatID(Message message) {
+     //   this.data.add(message);
+    //}
 
 }
