@@ -3,7 +3,6 @@ package tinder.utils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import tinder.dao.UserStorage;
 import tinder.models.*;
 import tinder.servlets.ChatServlet;
 import tinder.servlets.CssServlet;

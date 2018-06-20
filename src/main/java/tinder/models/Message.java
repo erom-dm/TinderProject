@@ -1,31 +1,39 @@
 package tinder.models;
 
+import java.util.Date;
+
 public class Message {
-     private int userId;
-     private int messageId;
-     private int chatRoomId;
+     private int userId1;
+     private int userId2;
      private String text;
-     private String time;
-     
-    public Message(int userId, String text, String time){
-         this.userId = userId;
-         this.text = text;
-         this.time = time;
-    }
-    public int getUserId() {
-        return userId;
+     private long time;
+
+    public  Message(){ }
+
+    public Message(int userId1, int userId2, String text){
+
+        java.util.Date date = new Date();
+
+        this.userId1 = userId1;
+        this.userId2 = userId2;
+        this.text = text;
+        this.time = date.getTime();
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getUserId1() {
+        return userId1;
     }
 
-    public int getMessageId() {
-        return messageId;
+    public void setUserId1(int userId1) {
+        this.userId1 = userId1;
     }
 
-    public void setMessageId(int messageId) {
-        this.messageId = messageId;
+    public int getUserId2() {
+        return userId2;
+    }
+
+    public void setUserId2(int userId2) {
+        this.userId2 = userId2;
     }
 
     public String getText() {
@@ -36,11 +44,11 @@ public class Message {
         this.text = text;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 }

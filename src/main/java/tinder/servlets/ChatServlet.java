@@ -3,8 +3,6 @@ package tinder.servlets;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-import tinder.dao.UserStorage;
-import tinder.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,14 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
-import javax.servlet.http.Cookie;
 
 public class ChatServlet extends HttpServlet {
-    private final UserStorage userStorage;
 
-    public ChatServlet(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public ChatServlet() {
+
     }
 
     @Override

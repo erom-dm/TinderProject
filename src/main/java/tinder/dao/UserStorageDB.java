@@ -9,7 +9,7 @@ public class UserStorageDB implements InterfaceDAO<User> {
     @Override
     public void save(User user)
     {
-        String sql = "INSERT INTO user(user_id, name, picture_url, gender) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO erom_users(id, name, pic_url, gender) VALUES(?,?,?,?)";
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
@@ -26,9 +26,39 @@ public class UserStorageDB implements InterfaceDAO<User> {
         }
     }
 
+    @Override
+    public User get(int userId)
+    {
+        User user = new User();
+
+        String sql = "SELECT * FROM erom_users WHERE id='" + userId + "'";
+
+        try (
+                Connection        connection  = ConnectionToDB.getConnection();
+                PreparedStatement statement  = connection.prepareStatement(sql);
+                ResultSet rSet = statement.executeQuery();
+        )
+        {
+            while ( rSet.next() )
+            {
+                user.setUserId(rSet.getInt("id"));
+                user.setUserName(rSet.getString("name"));
+                user.setUserPicURL(rSet.getString("pic_url"));
+                user.setGender(rSet.getString("gender"));
+
+                return user;
+            }
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override public void update(User user)
     {
-        String sql = "UPDATE user SET name=?, picture_url=? WHERE user_id=?";
+        String sql = "UPDATE erom_users SET name=?, pic_url=? WHERE id=?";
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
@@ -45,41 +75,9 @@ public class UserStorageDB implements InterfaceDAO<User> {
     }
 
     @Override
-    public User get(int userId)
-    {
-        User user = new User();
-
-        String sql = "SELECT * FROM user WHERE user_id='" + userId + "'";
-
-        try (
-                Connection        connection  = ConnectionToDB.getConnection();
-                PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
-        )
-        {
-            while ( rSet.next() )
-            {
-                user.setUserId(rSet.getInt("user_id"));
-                user.setUserName(rSet.getString("name"));
-                user.setUserPicURL(rSet.getString("picture_url"));
-                user.setGender(rSet.getString("gender"));
-                user.setLiked(rSet.getBoolean("liked"));
-                user.setSeen(rSet.getBoolean("seen"));
-
-                return user;
-            }
-        }
-        catch ( SQLException e )
-        {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public void delete(int userId)
     {
-        String sql = "DELETE FROM item WHERE article_id=?";
+        String sql = "DELETE FROM erom_users WHERE id=?";
 
         try (
                 Connection connection = ConnectionToDB.getConnection();

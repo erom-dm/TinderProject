@@ -5,24 +5,14 @@ public class User {
     private String userName;
     private String userPicURL;
     private String gender;
-    private boolean liked;
-    private boolean seen = false;
+    private long lastLogin;
 
     public User() {
     }
 
-    public User(int id, String userName, String gender, String userPic){
-        this.userId = id;
+    public User(String userName, String gender, String userPic){
         this.userName = userName;
         this.userPicURL = userPic;
-        this.gender = gender;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -50,19 +40,19 @@ public class User {
         this.userPicURL = userPicURL;
     }
 
-    public boolean isLiked() {
-        return liked;
+    public String getGender() {
+        return gender;
     }
 
-    public void setLiked(boolean liked) {
-        this.liked = liked;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public boolean isSeen() {
-        return seen;
+    public long getLastLogin() {
+        return lastLogin;
     }
 
-    public void setSeen(boolean seen) {
-        this.seen = seen;
+    public void setLastLogin(long lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
