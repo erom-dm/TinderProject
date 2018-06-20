@@ -16,11 +16,6 @@ import java.util.Map;
 
 
 public class LoginServlet extends HttpServlet {
-    private final UserStorage userStorage;
-
-    public LoginServlet(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

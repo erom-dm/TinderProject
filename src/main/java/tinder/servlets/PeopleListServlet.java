@@ -19,11 +19,6 @@ import java.util.Map;
 
 
 public class PeopleListServlet extends HttpServlet {
-    private final UserStorage userStorage;
-
-    public PeopleListServlet(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -14,7 +14,6 @@ import java.io.IOException;
 public class ChatServlet extends HttpServlet {
 
     public ChatServlet() {
-
     }
 
     @Override

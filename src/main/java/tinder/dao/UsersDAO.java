@@ -3,8 +3,10 @@ package tinder.dao;
 import tinder.models.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserStorageDB implements InterfaceDAO<User> {
+public class UsersDAO implements InterfaceDAO<User> {
 
     @Override
     public void save(User user)
@@ -93,4 +95,63 @@ public class UserStorageDB implements InterfaceDAO<User> {
         }
     }
 
+    public List<User> getAll(){
+        User user = new User();
+        List<User> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM erom_users";
+
+        try (
+                Connection        connection  = ConnectionToDB.getConnection();
+                PreparedStatement statement  = connection.prepareStatement(sql);
+                ResultSet rSet = statement.executeQuery();
+        )
+        {
+            while ( rSet.next() )
+            {
+                user.setUserId(rSet.getInt("id"));
+                user.setUserName(rSet.getString("name"));
+                user.setUserPicURL(rSet.getString("pic_url"));
+                user.setGender(rSet.getString("gender"));
+
+                list.add(user);
+            }
+            return list;
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User getFirstUnseen(String gender){
+        User user = new User();
+
+        String sql = "Select min(erom_users.id), name, pic_url, gender " +
+                "FROM erom_users LEFT JOIN erom_opinions on erom_opinions.liked_user_id = erom_users.id " +
+                "WHERE erom_opinions.like is null and erom_users.gender = '"+ gender +"'";
+
+        try (
+                Connection        connection  = ConnectionToDB.getConnection();
+                PreparedStatement statement  = connection.prepareStatement(sql);
+                ResultSet rSet = statement.executeQuery();
+        )
+        {
+            while ( rSet.next() )
+            {
+                user.setUserId(rSet.getInt("min(erom_users.id)"));
+                user.setUserName(rSet.getString("name"));
+                user.setUserPicURL(rSet.getString("pic_url"));
+                user.setGender(rSet.getString("gender"));
+
+                return user;
+            }
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

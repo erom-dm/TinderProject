@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import tinder.dao.UsersDAO;
 import tinder.models.User;
 
 import javax.servlet.ServletException;
@@ -13,15 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UsersServlet extends HttpServlet{
-    private final UserStorage userStorage;
-
-    public UsersServlet(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
+    UsersDAO dao = new UsersDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,9 +31,10 @@ public class UsersServlet extends HttpServlet{
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-        Map<String, Object> model = new HashMap<>();
-        if(userStorage.getFirstUnseen() != null) {
-            model.put("ul_user", userStorage.getFirstUnseen());
+        Map<String, User> model = new HashMap<>();
+        User user = dao.getFirstUnseen("female");
+        if(user != null) {
+            model.put("ul_user", user);
         }else{
             resp.sendRedirect("/liked");
         }
