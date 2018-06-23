@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import tinder.dao.UsersDAO;
 import tinder.models.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 
 public class PeopleListServlet extends HttpServlet {
-
+    UsersDAO dao = new UsersDAO();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
@@ -30,12 +31,9 @@ public class PeopleListServlet extends HttpServlet {
         cfg.setWrapUncheckedExceptions(true);
 
         Map<String, Object> model = new HashMap<>();
-        List<User> likedUsers = new ArrayList<>();
-        for (User u : userStorage) {
-            if(u.isLiked()){
-                likedUsers.add(u);
-            }
-        }
+        //TODO make this dynamic
+        List<User> likedUsers = dao.getAllLiked(0);
+
         model.put("likedUsers", likedUsers);
 
         Template template = cfg.getTemplate("people-list.html");

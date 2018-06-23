@@ -4,7 +4,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import tinder.dao.OpinionsDAO;
 import tinder.dao.UsersDAO;
+import tinder.models.Opinion;
 import tinder.models.User;
 
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 public class UsersServlet extends HttpServlet{
     UsersDAO dao = new UsersDAO();
+    OpinionsDAO daoOpinions = new OpinionsDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +35,8 @@ public class UsersServlet extends HttpServlet{
         cfg.setWrapUncheckedExceptions(true);
 
         Map<String, User> model = new HashMap<>();
-        User user = dao.getFirstUnseen("female");
+        //TODO make input in getFirstUnseen dynamic, depending on currently logged user
+        User user = dao.getFirstUnseen("female", 0);
         if(user != null) {
             model.put("ul_user", user);
         }else{
@@ -57,18 +61,15 @@ public class UsersServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("likeButton");
+        //TODO pass inputs through the cookies
+        User user = dao.getFirstUnseen("female", 0);
         if(name.equals("like")){
-            User current = userStorage.getFirstUnseen();
-            current.setLiked(true);
-            current.setSeen(true);
+            daoOpinions.save(new Opinion(0, user.getUserId(), true));
         }else if (name.equals("dislike")){
-            User current = userStorage.getFirstUnseen();
-            current.setLiked(false);
-            current.setSeen(true);
+            daoOpinions.save(new Opinion(0, user.getUserId(), false));
         }else if (name.equals("toLiked")){
             resp.sendRedirect("/liked");
         }
-
         resp.sendRedirect("/users");
     }
 }
