@@ -64,9 +64,9 @@ public class UsersServlet extends HttpServlet{
         //TODO pass inputs through the cookies
         User user = dao.getFirstUnseen("female", 0);
         if(name.equals("like")){
-            daoOpinions.save(new Opinion(0, user.getUserId(), true));
+            daoOpinions.save(new Opinion(0, user.getUserId(), 1));
         }else if (name.equals("dislike")){
-            daoOpinions.save(new Opinion(0, user.getUserId(), false));
+            daoOpinions.save(new Opinion(0, user.getUserId(), 0));
         }else if (name.equals("toLiked")){
             resp.sendRedirect("/liked");
         }

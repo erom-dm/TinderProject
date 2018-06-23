@@ -24,7 +24,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
             {
                 opinion.setUserId(rSet.getInt("user_id"));
                 opinion.setLikedUserId(rSet.getInt("liked_user_id"));
-                opinion.setLike(rSet.getBoolean("like"));
+                opinion.setLike(rSet.getInt("like"));
 
                 return opinion;
             }
@@ -38,13 +38,13 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
 
     @Override
     public void save(Opinion opinion) {
-        String sql = "INSERT INTO erom_opinions(user_id, liked_user_id, like) VALUES(?,?,?)";
+        String sql = "INSERT INTO `erom_opinions` (`user_id`, `liked_user_id`, `like`) VALUES (?,?,?)";
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
             statement.setInt(1, opinion.getUserId());
             statement.setInt(2, opinion.getLikedUserId());
-            statement.setBoolean(3, opinion.getLike());
+            statement.setInt(3, opinion.getLike());
 
             statement.executeUpdate();
         }
@@ -60,7 +60,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
-            statement.setBoolean(1, opinion.getLike());
+            statement.setInt(1, opinion.getLike());
             statement.setInt(2, opinion.getUserId());
 
             statement.executeUpdate();

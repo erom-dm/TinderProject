@@ -3,11 +3,11 @@ package tinder.models;
 public class Opinion {
     private int userId;
     private int likedUserId;
-    private boolean like;
+    private int like;
 
     public Opinion(){}
 
-    public Opinion(int userId, int likedUserId, boolean like) {
+    public Opinion(int userId, int likedUserId, int like) {
         this.userId = userId;
         this.likedUserId = likedUserId;
         this.like = like;
@@ -29,11 +29,11 @@ public class Opinion {
         this.likedUserId = likedUserId;
     }
 
-    public boolean getLike() {
+    public int getLike() {
         return like;
     }
 
-    public void setLike(boolean like) {
+    public void setLike(int like) {
         this.like = like;
     }
 }
