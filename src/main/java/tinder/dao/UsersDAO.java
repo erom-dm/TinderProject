@@ -77,7 +77,6 @@ public class UsersDAO implements InterfaceDAO<User> {
     }
 
     public List<User> getAllLiked(int currentUserId){
-        User user = new User();
         List<User> list = new ArrayList<>();
 
         String sql =
@@ -94,6 +93,7 @@ public class UsersDAO implements InterfaceDAO<User> {
         {
             while ( rSet.next() )
             {
+                User user = new User();
                 user.setUserId(rSet.getInt("id"));
                 user.setUserName(rSet.getString("name"));
                 user.setUserPicURL(rSet.getString("pic_url"));
