@@ -76,6 +76,36 @@ public class UsersDAO implements InterfaceDAO<User> {
         }
     }
 
+    public boolean loginValidation(String email, String password){
+        User user = new User();
+
+        String sql = "SELECT * FROM erom_users WHERE email='" + email + "'";
+
+        try (
+                Connection connection  = ConnectionToDB.getConnection();
+                PreparedStatement statement  = connection.prepareStatement(sql);
+                ResultSet rSet = statement.executeQuery()
+        )
+        {
+            while ( rSet.next() )
+            {
+                user.setUserId(rSet.getInt("id"));
+                user.setUserName(rSet.getString("name"));
+                user.setUserPicURL(rSet.getString("pic_url"));
+                user.setGender(rSet.getString("gender"));
+                user.setPassword(rSet.getString("password"));
+                user.setEmail(rSet.getString("email"));
+            }
+            if(user.getPassword().equals(password)) return true;
+
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<User> getAllLiked(int currentUserId){
         List<User> list = new ArrayList<>();
 

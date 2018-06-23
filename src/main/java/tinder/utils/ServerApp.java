@@ -4,10 +4,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import tinder.models.*;
-import tinder.servlets.ChatServlet;
-import tinder.servlets.CssServlet;
-import tinder.servlets.PeopleListServlet;
-import tinder.servlets.UsersServlet;
+import tinder.servlets.*;
 
 public class ServerApp {
 
@@ -19,6 +16,7 @@ public class ServerApp {
                            addServlet(new ServletHolder(new CssServlet()),"/static/*");
                            addServlet(new ServletHolder(new PeopleListServlet()) ,"/liked");
                            addServlet(new ServletHolder(new ChatServlet()) ,"/messages/*");
+                           addServlet(new ServletHolder(new LoginServlet()) ,"/login");
                        }}
             );
             start();
