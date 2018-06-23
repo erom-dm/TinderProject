@@ -32,7 +32,8 @@ public class LoginServlet extends HttpServlet {
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
-        Map<String, Object> model = new HashMap<>();
+        Map<String, String> model = new HashMap<>();
+        model.put("output", "Please sign in");
         Template template = cfg.getTemplate("login.html");
         Writer out = resp.getWriter();
         try {
@@ -44,20 +45,36 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        PrintWriter out = resp.getWriter();
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
+        cfg.setWrapUncheckedExceptions(true);
 
         String username = req.getParameter("username");
         String password = req.getParameter("pass");
+        String register = req.getParameter("regButton");
 
-        if(dao.loginValidation(username, password)){
+        Map<String, String> model = new HashMap<>();
+        Template template = cfg.getTemplate("login.html");
+        Writer out = resp.getWriter();
+
+        if(register == "reg"){
+            resp.sendRedirect("/register");
+        }
+        else if(dao.loginValidation(username, password)){
             resp.sendRedirect("/users");
         }
         else{
-            out.print("Sorry username or password error");
-            resp.sendRedirect("/login");
+            model.put("output", "Login/Pass was incorrect");
+            try {
+                template.process(model, out);
+            } catch (TemplateException e) {
+                e.printStackTrace();
+            }
         }
-        
+
     }
 
 

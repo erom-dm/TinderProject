@@ -5,6 +5,7 @@ import tinder.models.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.NullPointerException;
 
 public class UsersDAO implements InterfaceDAO<User> {
 
@@ -96,7 +97,11 @@ public class UsersDAO implements InterfaceDAO<User> {
                 user.setPassword(rSet.getString("password"));
                 user.setEmail(rSet.getString("email"));
             }
-            if(user.getPassword().equals(password)) return true;
+            try {
+                if(user.getPassword().equals(password)) return true;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
 
         }
         catch ( SQLException e )
