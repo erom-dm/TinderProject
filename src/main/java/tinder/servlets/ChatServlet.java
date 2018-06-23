@@ -2,7 +2,12 @@ package tinder.servlets;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import tinder.dao.MessagesDAO;
+import tinder.dao.UsersDAO;
+import tinder.models.Message;
+import tinder.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,8 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChatServlet extends HttpServlet {
+    UsersDAO dao = new UsersDAO();
+    MessagesDAO daoM = new MessagesDAO();
 
     public ChatServlet() {
     }
@@ -24,19 +36,27 @@ public class ChatServlet extends HttpServlet {
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
-    
-        //Map<String, Object> model = new HashMap<>();
-        
+
+        //String secondUserName = req.getRequestURI().replace("/messages/", ""); //  /messages/JanePoole
+
+        Map<String, Object> model = new HashMap<>();
+        //TODO make these dynamic for each chatroom
+        List<Message> messages = daoM.getAllChatroomMessages(0,2);
+
+        model.put("messages", messages);
+        model.put("user1", dao.get(0));
+        model.put("user2", dao.get(2));
 
         Template template = cfg.getTemplate("chat.html");
-        resp.getWriter().write(template.toString());
+        Writer out = resp.getWriter();
 
-        /*try {
+        try {
             template.process(model, out);
         } catch (TemplateException e) {
             e.printStackTrace();
-        }*/
-        
+        }
+
+
         //TODO cookies. Get logged in user ID and second user ID -> load appropriate chat data into the freemarker.
         //https://www.javatpoint.com/cookies-in-servlet
         

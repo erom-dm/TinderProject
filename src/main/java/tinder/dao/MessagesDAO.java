@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessagesDAO implements InterfaceDAO<Message> {
     @Override
@@ -90,5 +92,39 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         {
             e.printStackTrace();
         }
+    }
+
+    public List<Message> getAllChatroomMessages(int user_id_1, int user_id_2){
+
+        List<Message> lst = new ArrayList<>();
+        String sql =
+                "(SELECT * FROM erom_messages WHERE user_id_1 = '"+ user_id_1 +"' AND user_id_2 = '"+ user_id_2 +"') " +
+                "UNION " +
+                "(SELECT * FROM erom_messages WHERE user_id_1 = '"+ user_id_2 +"' AND user_id_2 = '"+ user_id_1 +"') " +
+                "ORDER BY time;";
+
+        try (
+                Connection connection  = ConnectionToDB.getConnection();
+                PreparedStatement statement  = connection.prepareStatement(sql);
+                ResultSet rSet = statement.executeQuery();
+        )
+        {
+            while ( rSet.next() )
+            {
+                Message message = new Message();
+                message.setUserId1(rSet.getInt("user_id_1"));
+                message.setUserId2(rSet.getInt("user_id_2"));
+                message.setText(rSet.getString("text"));
+                message.setTime(rSet.getLong("time"));
+
+                lst.add(message);
+            }
+            return lst;
+        }
+        catch ( SQLException e )
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
