@@ -8,15 +8,16 @@ import tinder.dao.MessagesDAO;
 import tinder.dao.UsersDAO;
 import tinder.models.Message;
 import tinder.models.User;
+import tinder.utils.ServletUtil;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class ChatServlet extends HttpServlet {
     UsersDAO dao = new UsersDAO();
     MessagesDAO daoM = new MessagesDAO();
+    ServletUtil util = new ServletUtil();
 
     public ChatServlet() {
     }
@@ -37,15 +39,25 @@ public class ChatServlet extends HttpServlet {
         cfg.setLogTemplateExceptions(false);
         cfg.setWrapUncheckedExceptions(true);
 
+        Cookie ckId = util.getCookiesByName(req, "userID");
+        Cookie ckGe = util.getCookiesByName(req, "gender");
+        ckId.setMaxAge(60*60);
+        ckGe.setMaxAge(60*60);
+        resp.addCookie(ckId);
+        resp.addCookie(ckGe);
+
         //String secondUserName = req.getRequestURI().replace("/messages/", ""); //  /messages/JanePoole
-
+        String[] uriParse = stringConverter(req);
         Map<String, Object> model = new HashMap<>();
-        //TODO make these dynamic for each chatroom
-        List<Message> messages = daoM.getAllChatRoomMessages(0,2);
+        int loggedUserId = Integer.parseInt(ckId.getValue());
+        int secondUserId = Integer.parseInt(uriParse[0]);
+        String secondUserName = uriParse[1].replace("_", " ");
+        List<Message> messages = daoM.getAllChatRoomMessages(loggedUserId,secondUserId);
 
+        model.put("chatLabel", secondUserName);
         model.put("messages", messages);
-        model.put("user1", dao.get(0));
-        model.put("user2", dao.get(2));
+        model.put("user1", dao.get(loggedUserId));
+        model.put("user2", dao.get(secondUserId));
 
         Template template = cfg.getTemplate("chat.html");
         Writer out = resp.getWriter();
@@ -79,7 +91,21 @@ public class ChatServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("textInput");
-        Message msg = new Message(0, 2, name);
+
+        Cookie ckId = util.getCookiesByName(req, "userID");
+        Cookie ckGe = util.getCookiesByName(req, "gender");
+        ckId.setMaxAge(60*60);
+        ckGe.setMaxAge(60*60);
+        resp.addCookie(ckId);
+        resp.addCookie(ckGe);
+
+
+        String[] uriParse = stringConverter(req);
+
+        int loggedUserId = Integer.parseInt(ckId.getValue());
+        int secondUserId = Integer.parseInt(uriParse[0]);
+
+        Message msg = new Message(loggedUserId, secondUserId, name);
         StringBuffer url = req.getRequestURL();
 
         try {
@@ -88,5 +114,10 @@ public class ChatServlet extends HttpServlet {
             e.printStackTrace();
         }
         resp.sendRedirect(url.toString());
+    }
+
+    private String[] stringConverter(HttpServletRequest req){
+        String[] temp = req.getRequestURI().replace("/messages/ID:", "").split("_", 2);
+        return temp;
     }
 }

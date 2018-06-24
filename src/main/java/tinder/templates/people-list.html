@@ -33,13 +33,13 @@
                         <table class="table-users table" border="0">
                             <tbody>
                                 <#list likedUsers as user>
-                                <#assign userName>${user.userName?replace(" ", "")}</#assign>
+                                <!-- for generating pretty URLs -->
+                                <#assign userName>${"ID:" + user.userId?c + "_" + user.userName?replace(" ", "_")}</#assign>
                                     <tr>
                                         <td width="10">
                                             <div class="avatar-img">
                                                 <a href="/messages/${userName}"><img class="img-circle" src=${user.userPicURL} /> </a>
                                             </div>
-
                                         </td>
                                         <td class="align-middle">
                                             ${user.userName}

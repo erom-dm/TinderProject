@@ -21,13 +21,13 @@
     <div class="row">
         <div class="chat-main col-6 offset-3">
             <div class="col-md-12 chat-header">
-                <form name="goBack" method="post">
+                <form action="/liked">
                     <button name="button" class="btn btn-lg btn-primary btn-block" type=submit value="back"> Back to liked people</button>
                 </form>
                 <div class="row header-one text-white p-1">
                     <div class="col-md-6 name pl-2">
                         <i class="fa fa-comment"></i>
-                        <h6 class="ml-1 mb-0">Ketty Peris</h6>
+                        <h6 class="ml-1 mb-0">${chatLabel}</h6>
                     </div>
                     <div class="col-md-6 options text-right pr-0">
                         <i class="fa fa-window-minimize hide-chat-box hover text-center pt-1"></i>
@@ -51,24 +51,26 @@
                 <div class="col-md-12 chats pt-3 pl-2 pr-3 pb-3">
                     <ul class="p-0">
                         <#list messages as msg>
-                            <#if msg.userId1 == user1.userId>
-                                <li class="send-msg float-right mb-2">
-                                    <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                        ${msg.text}
-                                    </p>
-                                </li>
-                            <#else>
-                                <li class="receive-msg float-left mb-2">
-                                    <div class="sender-img">
-                                        <img src="${user2.userPicURL}" class="float-left">
-                                    </div>
-                                    <div class="receive-msg-desc float-left ml-2">
-                                        <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                            <#if msg.text??>
+                                <#if msg.userId1 == user1.userId>
+                                    <li class="send-msg float-right mb-2">
+                                        <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
                                             ${msg.text}
                                         </p>
-                                        <span class="receive-msg-time">${msg.time}</span>
-                                    </div>
-                                </li>
+                                    </li>
+                                <#else>
+                                    <li class="receive-msg float-left mb-2">
+                                        <div class="sender-img">
+                                            <img src="${user2.userPicURL}" class="float-left">
+                                        </div>
+                                        <div class="receive-msg-desc float-left ml-2">
+                                            <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                                                ${msg.text}
+                                            </p>
+                                            <span class="receive-msg-time">${msg.time}</span>
+                                        </div>
+                                    </li>
+                                </#if>
                             </#if>
                         </#list>
                     </ul>

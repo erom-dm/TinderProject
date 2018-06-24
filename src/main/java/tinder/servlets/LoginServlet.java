@@ -9,6 +9,7 @@ import tinder.models.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,12 +60,22 @@ public class LoginServlet extends HttpServlet {
         Map<String, String> model = new HashMap<>();
         Template template = cfg.getTemplate("login.html");
         Writer out = resp.getWriter();
+        String[] loginValidation = dao.loginValidation(username, password);
 
         if(register == "reg"){
             resp.sendRedirect("/register");
         }
-        else if(dao.loginValidation(username, password)){
+        else if(loginValidation[0].equals("true")){
+
+            Cookie ckId = new Cookie("userID", loginValidation[1]);
+            Cookie ckGe = new Cookie("gender", loginValidation[2]);
+            ckId.setMaxAge(60*60);
+            ckGe.setMaxAge(60*60);
+            resp.addCookie(ckId);
+            resp.addCookie(ckGe);
+
             resp.sendRedirect("/users");
+
         }
         else{
             model.put("output", "Login/Pass was incorrect");

@@ -77,10 +77,21 @@ public class UsersDAO implements InterfaceDAO<User> {
         }
     }
 
-    public boolean loginValidation(String email, String password){
+    /**
+     * @param email - email string provided by the user
+     * @param password - password string provided by the user
+     * @return Returns an array[3], where first String represents boolean value
+     * ("true" if provided password corresponds to the password from the database),
+     * second String represents string value of user_id (for further use in the cookies),
+     * and third String contains user's gender.
+     *
+     */
+    public String[] loginValidation(String email, String password){
+
         User user = new User();
 
         String sql = "SELECT * FROM erom_users WHERE email='" + email + "'";
+        String[] result = new String[3];
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
@@ -96,9 +107,15 @@ public class UsersDAO implements InterfaceDAO<User> {
                 user.setGender(rSet.getString("gender"));
                 user.setPassword(rSet.getString("password"));
                 user.setEmail(rSet.getString("email"));
+
             }
             try {
-                if(user.getPassword().equals(password)) return true;
+                if(user.getPassword().equals(password)){
+                    result[0] = "true";
+                    result[1] = Integer.toString(user.getUserId());
+                    result[2] = user.getGender();
+                    return result;
+                }
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -108,7 +125,8 @@ public class UsersDAO implements InterfaceDAO<User> {
         {
             e.printStackTrace();
         }
-        return false;
+        result[0] = "false";
+        return result;
     }
 
     public List<User> getAllLiked(int currentUserId){
