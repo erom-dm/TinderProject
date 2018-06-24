@@ -80,11 +80,13 @@ public class ChatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("textInput");
         Message msg = new Message(0, 2, name);
+        StringBuffer url = req.getRequestURL();
 
         try {
             daoM.save(msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        resp.sendRedirect(url.toString());
     }
 }
