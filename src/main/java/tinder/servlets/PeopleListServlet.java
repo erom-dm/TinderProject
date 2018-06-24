@@ -59,15 +59,18 @@ public class PeopleListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("backButton");
 
-        Cookie ckId = util.getCookiesByName(req, "userID");
-        Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*60);
-        ckGe.setMaxAge(60*60);
-        resp.addCookie(ckId);
-        resp.addCookie(ckGe);
-
         if(name.equals("back")){
             resp.sendRedirect("/users");
+        }
+        else if(name.equals("logout")){
+            if (req.getCookies() != null) {
+                for (int i = 0; i < req.getCookies().length; i++) {
+                    req.getCookies()[i].setMaxAge(0);
+                    resp.addCookie(req.getCookies()[i]);
+                }
+            }
+
+            resp.sendRedirect("/login");
         }
     }
 }
