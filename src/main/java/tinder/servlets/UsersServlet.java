@@ -28,19 +28,14 @@ public class UsersServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        cfg.setWrapUncheckedExceptions(true);
+        Configuration cfg = util.getConfiguration();
 
         Map<String, User> model = new HashMap<>();
 
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*60);
-        ckGe.setMaxAge(60*60);
+        ckId.setMaxAge(60*5);
+        ckGe.setMaxAge(60*5);
         resp.addCookie(ckId);
         resp.addCookie(ckGe);
 
@@ -71,14 +66,15 @@ public class UsersServlet extends HttpServlet{
 
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*60);
-        ckGe.setMaxAge(60*60);
+        ckId.setMaxAge(60*5);
+        ckGe.setMaxAge(60*5);
         resp.addCookie(ckId);
         resp.addCookie(ckGe);
 
         int loggedUserId = Integer.parseInt(ckId.getValue());
+        String genderInterest = util.reverseGender(ckGe.getValue());
 
-        User user = dao.getFirstUnseen("female", loggedUserId);
+        User user = dao.getFirstUnseen(genderInterest, loggedUserId);
         if(name.equals("like")){
             daoOpinions.save(new Opinion(loggedUserId, user.getUserId(), 1));
         }else if (name.equals("dislike")){

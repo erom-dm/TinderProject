@@ -1,7 +1,13 @@
 package tinder.utils;
 
+import freemarker.template.Configuration;
+import freemarker.template.TemplateExceptionHandler;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 
 public class ServletUtil {
     public Cookie getCookiesByName(HttpServletRequest request, String name) {
@@ -24,5 +30,15 @@ public class ServletUtil {
             return "male";
         }
         else return null;
+    }
+
+    public Configuration getConfiguration() throws IOException {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
+        cfg.setWrapUncheckedExceptions(true);
+        return cfg;
     }
 }

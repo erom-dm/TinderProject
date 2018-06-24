@@ -6,6 +6,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.UsersDAO;
 import tinder.models.User;
+import tinder.utils.ServletUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,15 +24,11 @@ import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
     UsersDAO dao = new UsersDAO();
+    ServletUtil util = new ServletUtil();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        cfg.setWrapUncheckedExceptions(true);
+        Configuration cfg = util.getConfiguration();
 
         Map<String, String> model = new HashMap<>();
         model.put("output", "Please sign in");
@@ -46,12 +43,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        cfg.setWrapUncheckedExceptions(true);
+        Configuration cfg = util.getConfiguration();
 
         String username = req.getParameter("username");
         String password = req.getParameter("pass");
@@ -69,8 +61,8 @@ public class LoginServlet extends HttpServlet {
 
             Cookie ckId = new Cookie("userID", loginValidation[1]);
             Cookie ckGe = new Cookie("gender", loginValidation[2]);
-            ckId.setMaxAge(60*60);
-            ckGe.setMaxAge(60*60);
+            ckId.setMaxAge(60*5);
+            ckGe.setMaxAge(60*5);
             resp.addCookie(ckId);
             resp.addCookie(ckGe);
 

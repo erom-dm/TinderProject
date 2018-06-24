@@ -28,17 +28,12 @@ public class PeopleListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-        cfg.setDirectoryForTemplateLoading(new File("src/main/java/tinder/templates"));
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        cfg.setLogTemplateExceptions(false);
-        cfg.setWrapUncheckedExceptions(true);
+        Configuration cfg = util.getConfiguration();
 
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*60);
-        ckGe.setMaxAge(60*60);
+        ckId.setMaxAge(60*5);
+        ckGe.setMaxAge(60*5);
         resp.addCookie(ckId);
         resp.addCookie(ckGe);
 
