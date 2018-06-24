@@ -41,7 +41,7 @@ public class ChatServlet extends HttpServlet {
 
         Map<String, Object> model = new HashMap<>();
         //TODO make these dynamic for each chatroom
-        List<Message> messages = daoM.getAllChatroomMessages(0,2);
+        List<Message> messages = daoM.getAllChatRoomMessages(0,2);
 
         model.put("messages", messages);
         model.put("user1", dao.get(0));
@@ -78,9 +78,13 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("button");
-        if(name.equals("back")){
-            resp.sendRedirect("/liked");
+        String name = req.getParameter("textInput");
+        Message msg = new Message(0, 2, name);
+
+        try {
+            daoM.save(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

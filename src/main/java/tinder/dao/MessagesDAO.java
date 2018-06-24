@@ -27,7 +27,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
                 message.setUserId1(rSet.getInt("user_id_1"));
                 message.setUserId2(rSet.getInt("user_id_2"));
                 message.setText(rSet.getString("text"));
-                message.setTime(rSet.getLong("time"));
+                message.setTime(rSet.getString("time"));
 
                 return message;
             }
@@ -48,7 +48,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
             statement.setInt(1, message.getUserId1());
             statement.setInt(2, message.getUserId2());
             statement.setString(3, message.getText());
-            statement.setLong(4, message.getTime());
+            statement.setString(4, message.getTime());
 
             statement.executeUpdate();
         }
@@ -65,7 +65,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
             statement.setString(1, message.getText());
-            statement.setLong(2, message.getTime());
+            statement.setString(2, message.getTime());
             statement.setInt(3, message.getUserId1());
 
             statement.executeUpdate();
@@ -94,7 +94,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         }
     }
 
-    public List<Message> getAllChatroomMessages(int user_id_1, int user_id_2){
+    public List<Message> getAllChatRoomMessages(int user_id_1, int user_id_2){
 
         List<Message> lst = new ArrayList<>();
         String sql =
@@ -106,7 +106,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
+                ResultSet rSet = statement.executeQuery()
         )
         {
             while ( rSet.next() )
@@ -115,7 +115,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
                 message.setUserId1(rSet.getInt("user_id_1"));
                 message.setUserId2(rSet.getInt("user_id_2"));
                 message.setText(rSet.getString("text"));
-                message.setTime(rSet.getLong("time"));
+                message.setTime(rSet.getString("time"));
 
                 lst.add(message);
             }

@@ -6,18 +6,16 @@ public class Message {
      private int userId1;
      private int userId2;
      private String text;
-     private long time;
+     private String time;
 
     public  Message(){ }
 
     public Message(int userId1, int userId2, String text){
 
-        java.util.Date date = new Date();
-
         this.userId1 = userId1;
         this.userId2 = userId2;
         this.text = text;
-        this.time = date.getTime();
+        this.time = getCurrentTimeDate();
     }
 
     public int getUserId1() {
@@ -44,11 +42,22 @@ public class Message {
         this.text = text;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
+    }
+
+    private String getCurrentTimeDate() {
+
+        java.util.Date dt = new java.util.Date();
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(dt);
+
+        return currentTime;
+
     }
 }
