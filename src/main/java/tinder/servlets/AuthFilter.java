@@ -27,9 +27,7 @@ public class AuthFilter implements Filter {
         boolean loggedIn = false;
 
         for (Cookie cookie : cookies) {
-            String name = cookie.getName();
             String value = cookie.getValue();
-            System.out.printf("Cookie{ '%s' : '%s' }", name, value);
         }
 
         if (loggedIn || publicUrls.contains(req.getRequestURI())) {

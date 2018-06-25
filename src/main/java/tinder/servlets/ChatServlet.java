@@ -35,10 +35,10 @@ public class ChatServlet extends HttpServlet {
         Configuration cfg = util.getConfiguration();
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*5);
+        /*ckId.setMaxAge(60*5);
         ckGe.setMaxAge(60*5);
         resp.addCookie(ckId);
-        resp.addCookie(ckGe);
+        resp.addCookie(ckGe);*/
 
         String[] uriParse = stringConverter(req);
         Map<String, Object> model = new HashMap<>();
@@ -66,10 +66,10 @@ public class ChatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        ckId.setMaxAge(60*5);
+        /*ckId.setMaxAge(60*5);
         ckGe.setMaxAge(60*5);
         resp.addCookie(ckId);
-        resp.addCookie(ckGe);
+        resp.addCookie(ckGe);*/
 
         String name = req.getParameter("textInput");
         String[] uriParse = stringConverter(req);

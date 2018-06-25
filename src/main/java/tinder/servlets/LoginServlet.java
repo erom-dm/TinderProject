@@ -61,8 +61,8 @@ public class LoginServlet extends HttpServlet {
 
             Cookie ckId = new Cookie("userID", loginValidation[1]);
             Cookie ckGe = new Cookie("gender", loginValidation[2]);
-            ckId.setMaxAge(60*5);
-            ckGe.setMaxAge(60*5);
+            ckId.setMaxAge(60*60);
+            ckGe.setMaxAge(60*60);
             resp.addCookie(ckId);
             resp.addCookie(ckGe);
 
