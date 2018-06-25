@@ -34,10 +34,6 @@ public class UsersServlet extends HttpServlet{
 
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-       /* ckId.setMaxAge(60*5);
-        ckGe.setMaxAge(60*5);
-        resp.addCookie(ckId);
-        resp.addCookie(ckGe);*/
 
         int loggedUserId = Integer.parseInt(ckId.getValue());
         String genderInterest = util.reverseGender(ckGe.getValue());
@@ -66,10 +62,6 @@ public class UsersServlet extends HttpServlet{
 
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
-        /*ckId.setMaxAge(60*5);
-        ckGe.setMaxAge(60*5);
-        resp.addCookie(ckId);
-        resp.addCookie(ckGe);*/
 
         int loggedUserId = Integer.parseInt(ckId.getValue());
         String genderInterest = util.reverseGender(ckGe.getValue());
