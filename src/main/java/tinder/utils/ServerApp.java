@@ -17,6 +17,7 @@ public class ServerApp {
                            addServlet(new ServletHolder(new PeopleListServlet()) ,"/liked");
                            addServlet(new ServletHolder(new ChatServlet()) ,"/messages/*");
                            addServlet(new ServletHolder(new LoginServlet()) ,"/login");
+                           addServlet(new ServletHolder(new RegisterServlet()) ,"/register");
                        }}
             );
             start();
