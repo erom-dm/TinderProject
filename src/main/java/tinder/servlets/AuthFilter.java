@@ -1,44 +1,43 @@
 package tinder.servlets;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
+
+
+
+import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-@WebFilter(filterName = "cookieFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
 
-    static Set<String> publicUrls = new HashSet<String>(){{ add("/login"); }};
+    }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
-        Cookie[] cookies = req.getCookies();
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        Cookie[] cookies = request.getCookies();
         boolean loggedIn = false;
 
-        for (Cookie cookie : cookies) {
-            String value = cookie.getValue();
-        }
 
-        if (loggedIn || publicUrls.contains(req.getRequestURI())) {
-            chain.doFilter(request, response);
+        if (cookies != null) {
+            for (Cookie ck : cookies) {
+                if (ck.getName().equals("userID")) {
+                    loggedIn = true;
+                }
+            }
+        }
+        if (loggedIn) {
+            chain.doFilter(req, resp);
         } else {
-            resp.sendRedirect("/login");
+            ((HttpServletResponse) resp).sendRedirect("/login");
         }
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException { }
-    @Override
-    public void destroy() { }
+    public void destroy() {
+
+    }
 }
