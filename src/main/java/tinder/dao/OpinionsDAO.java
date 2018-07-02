@@ -38,7 +38,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
 
     @Override
     public void save(Opinion opinion) {
-        String sql = "INSERT INTO `erom_opinions` (`user_id`, `liked_user_id`, `like`) VALUES (?,?,?)";
+        String sql = "INSERT INTO erom_opinions (user_id, liked_user_id, \"like\") VALUES (?,?,?)";
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
         {
