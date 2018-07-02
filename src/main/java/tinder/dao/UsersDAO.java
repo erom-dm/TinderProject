@@ -14,7 +14,7 @@ public class UsersDAO implements InterfaceDAO<User> {
     {
         String sql = "INSERT INTO erom_users(id, name, pic_url, gender) VALUES(?,?,?,?)";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setInt(1, user.getUserId());
             statement.setString(2, user.getUserName());
@@ -44,7 +44,7 @@ public class UsersDAO implements InterfaceDAO<User> {
     {
         String sql = "UPDATE erom_users SET name=?, pic_url=? WHERE id=?";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getUserPicURL());
@@ -65,7 +65,7 @@ public class UsersDAO implements InterfaceDAO<User> {
 
         try (
                 Connection connection = ConnectionToDB.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql)
         )
         {
             statement.setInt(1, userId);
@@ -141,7 +141,7 @@ public class UsersDAO implements InterfaceDAO<User> {
         try (
                 Connection        connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
+                ResultSet rSet = statement.executeQuery()
         )
         {
             while ( rSet.next() )
@@ -188,7 +188,7 @@ public class UsersDAO implements InterfaceDAO<User> {
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
+                ResultSet rSet = statement.executeQuery()
         )
         {
             while ( rSet.next() )

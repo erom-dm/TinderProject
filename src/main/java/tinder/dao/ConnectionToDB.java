@@ -2,7 +2,7 @@ package tinder.dao;
 
 import java.sql.*;
 
-public class ConnectionToDB {
+class ConnectionToDB {
     // Remote PostgreSQL
     //5432 port postgres
     //3306 port mysql

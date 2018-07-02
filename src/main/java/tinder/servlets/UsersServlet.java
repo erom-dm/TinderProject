@@ -3,31 +3,27 @@ package tinder.servlets;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.OpinionsDAO;
 import tinder.dao.UsersDAO;
 import tinder.models.Opinion;
 import tinder.models.User;
 import tinder.utils.ServletUtil;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UsersServlet extends HttpServlet{
-    UsersDAO dao = new UsersDAO();
-    OpinionsDAO daoOpinions = new OpinionsDAO();
-    ServletUtil util = new ServletUtil();
+    private UsersDAO dao = new UsersDAO();
+    private OpinionsDAO daoOpinions = new OpinionsDAO();
+    private ServletUtil util = new ServletUtil();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
 
         Map<String, User> model = new HashMap<>();
@@ -57,7 +53,7 @@ public class UsersServlet extends HttpServlet{
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("likeButton");
 
         Cookie ckId = util.getCookiesByName(req, "userID");
@@ -67,12 +63,16 @@ public class UsersServlet extends HttpServlet{
         String genderInterest = util.reverseGender(ckGe.getValue());
 
         User user = dao.getFirstUnseen(genderInterest, loggedUserId);
-        if(name.equals("like")){
-            daoOpinions.save(new Opinion(loggedUserId, user.getUserId(), 1));
-        }else if (name.equals("dislike")){
-            daoOpinions.save(new Opinion(loggedUserId, user.getUserId(), 0));
-        }else if (name.equals("toLiked")){
-            resp.sendRedirect("/liked");
+        switch (name) {
+            case "like":
+                daoOpinions.save(new Opinion(loggedUserId, user.getUserId(), 1));
+                break;
+            case "dislike":
+                daoOpinions.save(new Opinion(loggedUserId, user.getUserId(), 0));
+                break;
+            case "toLiked":
+                resp.sendRedirect("/liked");
+                break;
         }
         resp.sendRedirect("/users");
     }

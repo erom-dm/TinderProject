@@ -54,8 +54,7 @@ public class Message {
     private String getCurrentTimeDate() {
         Date dt = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = sdf.format(dt);
 
-        return currentTime;
+        return sdf.format(dt);
     }
 }

@@ -6,8 +6,6 @@ import freemarker.template.TemplateException;
 import tinder.dao.UsersDAO;
 import tinder.models.User;
 import tinder.utils.ServletUtil;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +18,13 @@ import java.util.Map;
 
 
 public class PeopleListServlet extends HttpServlet {
-    UsersDAO dao = new UsersDAO();
-    ServletUtil util = new ServletUtil();
+    private UsersDAO dao = new UsersDAO();
+    private ServletUtil util = new ServletUtil();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Configuration cfg = util.getConfiguration();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Configuration cfg;
+        cfg = util.getConfiguration();
 
         Cookie ckId = util.getCookiesByName(req, "userID");
 
@@ -48,7 +47,7 @@ public class PeopleListServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("backButton");
 
         if(name.equals("back")){

@@ -2,10 +2,8 @@ package tinder.utils;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,13 +21,14 @@ public class ServletUtil {
     }
 
     public String reverseGender(String userGender){
-        if (userGender.equals("male")){
-            return "female";
+        switch (userGender) {
+            case "male":
+                return "female";
+            case "female":
+                return "male";
+            default:
+                return null;
         }
-        else if (userGender.equals("female")){
-            return "male";
-        }
-        else return null;
     }
 
     public Configuration getConfiguration() throws IOException {

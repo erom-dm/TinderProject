@@ -19,7 +19,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
+                ResultSet rSet = statement.executeQuery()
         )
         {
             while ( rSet.next() )
@@ -43,7 +43,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
     public void save(Message message) {
         String sql = "INSERT INTO erom_messages(user_id_1, user_id_2, text, time) VALUES(?,?,?,?)";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setInt(1, message.getUserId1());
             statement.setInt(2, message.getUserId2());
@@ -62,7 +62,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
     public void update(Message message) {
         String sql = "UPDATE erom_messages SET text=?, time=? WHERE user_id_1=?";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setString(1, message.getText());
             statement.setString(2, message.getTime());
@@ -82,7 +82,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
 
         try (
                 Connection connection = ConnectionToDB.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql)
         )
         {
             statement.setInt(1, user_id_1);

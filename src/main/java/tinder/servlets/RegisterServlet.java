@@ -3,31 +3,24 @@ package tinder.servlets;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.UsersDAO;
-import tinder.models.User;
 import tinder.utils.ServletUtil;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class RegisterServlet extends HttpServlet {
-    UsersDAO dao = new UsersDAO();
-    ServletUtil util = new ServletUtil();
+    private UsersDAO dao = new UsersDAO();
+    private ServletUtil util = new ServletUtil();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
 
         Map<String, String> model = new HashMap<>();
@@ -42,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
 
         String username = req.getParameter("username");

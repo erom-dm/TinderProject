@@ -4,16 +4,13 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import tinder.models.*;
 import tinder.servlets.*;
-
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
-import java.util.logging.Filter;
 
 public class ServerApp {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         new Server(8001) {{
 

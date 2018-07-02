@@ -3,19 +3,14 @@ package tinder.servlets;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateExceptionHandler;
 import tinder.dao.MessagesDAO;
 import tinder.dao.UsersDAO;
 import tinder.models.Message;
-import tinder.models.User;
 import tinder.utils.ServletUtil;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
@@ -23,15 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 public class ChatServlet extends HttpServlet {
-    UsersDAO dao = new UsersDAO();
-    MessagesDAO daoM = new MessagesDAO();
-    ServletUtil util = new ServletUtil();
+    private UsersDAO dao = new UsersDAO();
+    private MessagesDAO daoM = new MessagesDAO();
+    private ServletUtil util = new ServletUtil();
 
     public ChatServlet() {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
         Cookie ckId = util.getCookiesByName(req, "userID");
 
@@ -58,7 +53,7 @@ public class ChatServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Cookie ckId = util.getCookiesByName(req, "userID");
 
         String name = req.getParameter("textInput");
@@ -79,7 +74,6 @@ public class ChatServlet extends HttpServlet {
     }
 
     private String[] stringConverter(HttpServletRequest req){
-        String[] temp = req.getRequestURI().replace("/messages/ID:", "").split("_", 2);
-        return temp;
+        return req.getRequestURI().replace("/messages/ID:", "").split("_", 2);
     }
 }

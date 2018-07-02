@@ -17,7 +17,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery();
+                ResultSet rSet = statement.executeQuery()
         )
         {
             while ( rSet.next() )
@@ -40,7 +40,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
     public void save(Opinion opinion) {
         String sql = "INSERT INTO erom_opinions (user_id, liked_user_id, \"like\") VALUES (?,?,?)";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setInt(1, opinion.getUserId());
             statement.setInt(2, opinion.getLikedUserId());
@@ -58,7 +58,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
     public void update(Opinion opinion) {
         String sql = "UPDATE erom_opinions SET like=? WHERE user_id=?";
 
-        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); )
+        try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
             statement.setInt(1, opinion.getLike());
             statement.setInt(2, opinion.getUserId());
@@ -77,7 +77,7 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
 
         try (
                 Connection connection = ConnectionToDB.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql)
         )
         {
             statement.setInt(1, user_id);
