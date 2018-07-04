@@ -12,14 +12,15 @@ public class UsersDAO implements InterfaceDAO<User> {
     @Override
     public void save(User user)
     {
-        String sql = "INSERT INTO erom_users(id, name, pic_url, gender) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO erom_users(id, name, email, password, pic_url, gender) VALUES(default,?,?,?,?,?)";
 
         try ( Connection connection = ConnectionToDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql) )
         {
-            statement.setInt(1, user.getUserId());
-            statement.setString(2, user.getUserName());
-            statement.setString(3, user.getUserPicURL());
-            statement.setString(3, user.getGender());
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getUserPicURL());
+            statement.setString(5, user.getGender());
 
             statement.executeUpdate();
         }
