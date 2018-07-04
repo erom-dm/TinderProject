@@ -3,6 +3,7 @@ package tinder.models;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+
 public class Message {
      private int userId1;
      private int userId2;

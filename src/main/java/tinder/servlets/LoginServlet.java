@@ -5,6 +5,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import tinder.dao.UsersDAO;
 import tinder.utils.ServletUtil;
+import tinder.utils.Encryptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
     private UsersDAO dao = new UsersDAO();
     private ServletUtil util = new ServletUtil();
+    private Encryptor cyph = new Encryptor();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -51,9 +53,8 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("/register");
         }
         else if(loginValidation[0].equals("true")){
-
-            Cookie ckId = new Cookie("userID", loginValidation[1]);
-            Cookie ckGe = new Cookie("gender", loginValidation[2]);
+            Cookie ckId = new Cookie("userID", cyph.encrypt(loginValidation[1]));
+            Cookie ckGe = new Cookie("gender", cyph.encrypt(loginValidation[2]));
             ckId.setMaxAge(60*60);
             ckGe.setMaxAge(60*60);
             resp.addCookie(ckId);

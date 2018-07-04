@@ -7,6 +7,7 @@ import tinder.dao.OpinionsDAO;
 import tinder.dao.UsersDAO;
 import tinder.models.Opinion;
 import tinder.models.User;
+import tinder.utils.Encryptor;
 import tinder.utils.ServletUtil;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ public class UsersServlet extends HttpServlet{
     private UsersDAO dao = new UsersDAO();
     private OpinionsDAO daoOpinions = new OpinionsDAO();
     private ServletUtil util = new ServletUtil();
+    private Encryptor cyph = new Encryptor();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -31,8 +33,8 @@ public class UsersServlet extends HttpServlet{
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
 
-        int loggedUserId = Integer.parseInt(ckId.getValue());
-        String genderInterest = util.reverseGender(ckGe.getValue());
+        int loggedUserId = Integer.parseInt(cyph.decrypt(ckId.getValue()));
+        String genderInterest = util.reverseGender(cyph.decrypt(ckGe.getValue()));
 
         User user = dao.getFirstUnseen(genderInterest, loggedUserId);
         if(user != null) {
@@ -59,8 +61,8 @@ public class UsersServlet extends HttpServlet{
         Cookie ckId = util.getCookiesByName(req, "userID");
         Cookie ckGe = util.getCookiesByName(req, "gender");
 
-        int loggedUserId = Integer.parseInt(ckId.getValue());
-        String genderInterest = util.reverseGender(ckGe.getValue());
+        int loggedUserId = Integer.parseInt(cyph.decrypt(ckId.getValue()));
+        String genderInterest = util.reverseGender(cyph.decrypt(ckGe.getValue()));
 
         User user = dao.getFirstUnseen(genderInterest, loggedUserId);
         switch (name) {

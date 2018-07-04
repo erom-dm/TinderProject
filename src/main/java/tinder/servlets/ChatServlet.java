@@ -6,6 +6,7 @@ import freemarker.template.TemplateException;
 import tinder.dao.MessagesDAO;
 import tinder.dao.UsersDAO;
 import tinder.models.Message;
+import tinder.utils.Encryptor;
 import tinder.utils.ServletUtil;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ public class ChatServlet extends HttpServlet {
     private UsersDAO dao = new UsersDAO();
     private MessagesDAO daoM = new MessagesDAO();
     private ServletUtil util = new ServletUtil();
+    private Encryptor cyph = new Encryptor();
 
     public ChatServlet() {
     }
@@ -32,7 +34,7 @@ public class ChatServlet extends HttpServlet {
 
         String[] uriParse = stringConverter(req);
         Map<String, Object> model = new HashMap<>();
-        int loggedUserId = Integer.parseInt(ckId.getValue());
+        int loggedUserId = Integer.parseInt(cyph.decrypt(ckId.getValue()));
         int secondUserId = Integer.parseInt(uriParse[0]);
         String secondUserName = uriParse[1].replace("_", " ");
         List<Message> messages = daoM.getAllChatRoomMessages(loggedUserId,secondUserId);
@@ -59,7 +61,7 @@ public class ChatServlet extends HttpServlet {
         String name = req.getParameter("textInput");
         String[] uriParse = stringConverter(req);
 
-        int loggedUserId = Integer.parseInt(ckId.getValue());
+        int loggedUserId = Integer.parseInt(cyph.decrypt(ckId.getValue()));
         int secondUserId = Integer.parseInt(uriParse[0]);
 
         Message msg = new Message(loggedUserId, secondUserId, name);

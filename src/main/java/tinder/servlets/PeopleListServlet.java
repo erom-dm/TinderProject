@@ -5,6 +5,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import tinder.dao.UsersDAO;
 import tinder.models.User;
+import tinder.utils.Encryptor;
 import tinder.utils.ServletUtil;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class PeopleListServlet extends HttpServlet {
     private UsersDAO dao = new UsersDAO();
     private ServletUtil util = new ServletUtil();
+    private Encryptor cyph = new Encryptor();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -28,7 +30,7 @@ public class PeopleListServlet extends HttpServlet {
 
         Cookie ckId = util.getCookiesByName(req, "userID");
 
-        int loggedUserId = Integer.parseInt(ckId.getValue());
+        int loggedUserId = Integer.parseInt(cyph.decrypt(ckId.getValue()));
 
         Map<String, Object> model = new HashMap<>();
         List<User> likedUsers = dao.getAllLiked(loggedUserId);
