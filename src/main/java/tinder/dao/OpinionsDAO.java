@@ -12,14 +12,16 @@ public class OpinionsDAO implements InterfaceDAO<Opinion>{
     public Opinion get(int user_id) {
         Opinion opinion = new Opinion();
 
-        String sql = "SELECT * FROM erom_opinions WHERE user_id='" + user_id + "'";
+        String sql = "SELECT * FROM erom_opinions WHERE user_id=?";
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery()
         )
         {
+            statement.setInt(1, user_id);
+            ResultSet rSet = statement.executeQuery();
+
             while ( rSet.next() )
             {
                 opinion.setUserId(rSet.getInt("user_id"));

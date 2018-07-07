@@ -14,14 +14,16 @@ public class MessagesDAO implements InterfaceDAO<Message> {
     public Message get(int user_id_1) {
         Message message = new Message();
 
-        String sql = "SELECT * FROM erom_messages WHERE user_id_1='" + user_id_1 + "'";
+        String sql = "SELECT * FROM erom_messages WHERE user_id_1=?";
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery()
         )
         {
+            statement.setInt(1, user_id_1);
+            ResultSet rSet = statement.executeQuery();
+
             while ( rSet.next() )
             {
                 message.setUserId1(rSet.getInt("user_id_1"));
@@ -98,17 +100,23 @@ public class MessagesDAO implements InterfaceDAO<Message> {
 
         List<Message> lst = new ArrayList<>();
         String sql =
-                "(SELECT * FROM erom_messages WHERE user_id_1 = '"+ user_id_1 +"' AND user_id_2 = '"+ user_id_2 +"') " +
+                "(SELECT * FROM erom_messages WHERE user_id_1 = ? AND user_id_2 = ?) " +
                 "UNION " +
-                "(SELECT * FROM erom_messages WHERE user_id_1 = '"+ user_id_2 +"' AND user_id_2 = '"+ user_id_1 +"') " +
+                "(SELECT * FROM erom_messages WHERE user_id_1 = ? AND user_id_2 = ?) " +
                 "ORDER BY time;";
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
                 PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery()
         )
         {
+
+            statement.setInt(1, user_id_1);
+            statement.setInt(2, user_id_2);
+            statement.setInt(3, user_id_1);
+            statement.setInt(4, user_id_2);
+            ResultSet rSet = statement.executeQuery();
+
             while ( rSet.next() )
             {
                 Message message = new Message();
