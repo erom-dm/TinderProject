@@ -107,10 +107,8 @@ public class MessagesDAO implements InterfaceDAO<Message> {
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
-                PreparedStatement statement  = connection.prepareStatement(sql);
-        )
-        {
-
+                PreparedStatement statement  = connection.prepareStatement(sql)
+        ){
             statement.setInt(1, user_id_1);
             statement.setInt(2, user_id_2);
             statement.setInt(3, user_id_1);
@@ -128,9 +126,7 @@ public class MessagesDAO implements InterfaceDAO<Message> {
                 lst.add(message);
             }
             return lst;
-        }
-        catch ( SQLException e )
-        {
+        } catch ( SQLException e ) {
             e.printStackTrace();
         }
         return null;

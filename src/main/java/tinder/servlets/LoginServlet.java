@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import tinder.dao.UsersDAO;
+import tinder.models.LoginData;
 import tinder.utils.ServletUtil;
 import tinder.utils.Encryptor;
 import javax.servlet.http.Cookie;
@@ -39,6 +40,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
+        LoginData data;
 
         String username = req.getParameter("username");
         String password = req.getParameter("pass");
@@ -47,14 +49,14 @@ public class LoginServlet extends HttpServlet {
         Map<String, String> model = new HashMap<>();
         Template template = cfg.getTemplate("login.html");
         Writer out = resp.getWriter();
-        String[] loginValidation = dao.loginValidation(username, password);
+        data = dao.loginValidation(username, password);
 
         if(register == "reg"){
             resp.sendRedirect("/register");
         }
-        else if(loginValidation[0].equals("true")){
-            Cookie ckId = new Cookie("userID", cyph.encrypt(loginValidation[1]));
-            Cookie ckGe = new Cookie("gender", cyph.encrypt(loginValidation[2]));
+        else if(data.isPasswordMatch()){
+            Cookie ckId = new Cookie("userID", cyph.encrypt(Integer.toString(data.getId())));
+            Cookie ckGe = new Cookie("gender", cyph.encrypt(data.getGender()));
             ckId.setMaxAge(60*60);
             ckGe.setMaxAge(60*60);
             resp.addCookie(ckId);

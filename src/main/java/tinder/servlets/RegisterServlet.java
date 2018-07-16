@@ -4,6 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import tinder.dao.UsersDAO;
+import tinder.models.LoginData;
 import tinder.models.User;
 import tinder.utils.Encryptor;
 import tinder.utils.ServletUtil;
@@ -40,6 +41,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg = util.getConfiguration();
+        LoginData data;
 
         String username = req.getParameter("username");
         String email = req.getParameter("email");
@@ -69,9 +71,9 @@ public class RegisterServlet extends HttpServlet {
             user.setGender(gender);
             dao.save(user);
 
-            String[] loginValidation = dao.loginValidation(email, password);
-            Cookie ckId = new Cookie("userID", cyph.encrypt(loginValidation[1]));
-            Cookie ckGe = new Cookie("gender", cyph.encrypt(loginValidation[2]));
+            data = dao.loginValidation(email, password);
+            Cookie ckId = new Cookie("userID", cyph.encrypt(Integer.toString(data.getId())));
+            Cookie ckGe = new Cookie("gender", cyph.encrypt(data.getGender()));
             ckId.setMaxAge(60*5);
             ckGe.setMaxAge(60*5);
             resp.addCookie(ckId);

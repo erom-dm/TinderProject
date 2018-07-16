@@ -1,5 +1,6 @@
 package tinder.dao;
 
+import tinder.models.LoginData;
 import tinder.models.User;
 
 import java.sql.*;
@@ -87,19 +88,21 @@ public class UsersDAO implements InterfaceDAO<User> {
      * and third String contains user's gender.
      *
      */
-    public String[] loginValidation(String email, String password){
+    public LoginData loginValidation(String email, String password){
 
         User user = new User();
+        LoginData data = new LoginData();
 
-        String sql = "SELECT * FROM erom_users WHERE email='" + email + "'";
-        String[] result = new String[3];
+        String sql = "SELECT * FROM erom_users WHERE email=?";
 
         try (
                 Connection connection  = ConnectionToDB.getConnection();
-                PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery()
+                PreparedStatement statement  = connection.prepareStatement(sql)
         )
         {
+            statement.setString(1, email);
+            ResultSet rSet = statement.executeQuery();
+
             while ( rSet.next() )
             {
                 user.setUserId(rSet.getInt("id"));
@@ -112,10 +115,10 @@ public class UsersDAO implements InterfaceDAO<User> {
             }
             try {
                 if(user.getPassword().equals(password)){
-                    result[0] = "true";
-                    result[1] = Integer.toString(user.getUserId());
-                    result[2] = user.getGender();
-                    return result;
+                    data.setPasswordMatch(true);
+                    data.setId(user.getUserId());
+                    data.setGender(user.getGender());
+                    return data;
                 }
             } catch (NullPointerException e) {
                 e.printStackTrace();
@@ -126,8 +129,8 @@ public class UsersDAO implements InterfaceDAO<User> {
         {
             e.printStackTrace();
         }
-        result[0] = "false";
-        return result;
+        data.setPasswordMatch(false);
+        return data;
     }
 
     public List<User> getAllLiked(int currentUserId){
@@ -136,15 +139,17 @@ public class UsersDAO implements InterfaceDAO<User> {
         String sql =
         "SELECT U.* FROM erom_users as U "+
         "LEFT JOIN erom_opinions as O ON O.liked_user_id = U.id "+
-        "WHERE O.user_id = '"+ currentUserId +"' and O.like = 1; ";
+        "WHERE O.user_id = ? and O.like = 1; ";
 
 
         try (
                 Connection        connection  = ConnectionToDB.getConnection();
-                PreparedStatement statement  = connection.prepareStatement(sql);
-                ResultSet rSet = statement.executeQuery()
+                PreparedStatement statement  = connection.prepareStatement(sql)
         )
         {
+            statement.setInt(1, currentUserId);
+            ResultSet rSet = statement.executeQuery();
+
             while ( rSet.next() )
             {
                 User user = new User();
