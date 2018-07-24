@@ -1,0 +1,1 @@
+web: java -jar target/Tinder-SNAPSHOT-jar-with-dependencies.jar $PORT

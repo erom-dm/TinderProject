@@ -6,14 +6,19 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import tinder.servlets.*;
 import javax.servlet.DispatcherType;
+import java.util.Arrays;
 import java.util.EnumSet;
 
 public class ServerApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        System.out.println("Command line arguments:");
+        System.out.println(Arrays.toString(args));
+        String port = null;
 
-        new Server(8001) {{
+        port = args.length > 0 ? args[0] : "8001";
 
+        new Server(Integer.parseInt(port)) {{
 
             setHandler(new ServletContextHandler() {{
                            addServlet(new ServletHolder(new UsersServlet()) ,"/users");
