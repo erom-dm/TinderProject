@@ -111,8 +111,8 @@ public class MessagesDAO implements InterfaceDAO<Message> {
         ){
             statement.setInt(1, user_id_1);
             statement.setInt(2, user_id_2);
-            statement.setInt(3, user_id_1);
-            statement.setInt(4, user_id_2);
+            statement.setInt(3, user_id_2);
+            statement.setInt(4, user_id_1);
             ResultSet rSet = statement.executeQuery();
 
             while ( rSet.next() )
