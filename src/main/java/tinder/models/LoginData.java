@@ -1,9 +1,9 @@
 package tinder.models;
 
 public class LoginData {
-    boolean passwordMatch;
-    int id;
-    String gender;
+    private boolean passwordMatch;
+    private int id;
+    private String gender;
 
     public boolean isPasswordMatch() {
         return passwordMatch;
@@ -28,6 +28,5 @@ public class LoginData {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
 
 }
