@@ -2,7 +2,10 @@ package tinder.servlets;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,12 +19,11 @@ public class CssServlet extends HttpServlet {
         String url = req.getPathInfo();
         if (url!=null) {
             // input
-            Path in = Paths.get("src/main/java/tinder/templates", url);
-            // set the type for downloading ability instead of plain show in the browser window.
-            //resp.setContentType("application/octet-stream");
-            //resp.setHeader("Content-Disposition",String.format("attachment; filename=\"%s\"", in.getFileName().toString()));
-            // move content from the FileInputStream to ServletOutputStream
-            Files.copy(in, resp.getOutputStream());
+            InputStream in = this.getClass().getResourceAsStream("static/html/css/style.css");
+
+            Files.copy((Path) in, resp.getOutputStream());
+
+
         } else {
             resp.getWriter().print("you should pass the file name after slash");
         }
