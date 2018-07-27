@@ -1,1 +1,1 @@
-web: java -jar target/Tinder-SNAPSHOT-jar-with-dependencies.jar $PORT
+web: java -jar target/basic-1.0-SNAPSHOT-jar-with-dependencies.jar $PORT
