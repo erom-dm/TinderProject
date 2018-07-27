@@ -26,7 +26,7 @@ public class PeopleListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Configuration cfg;
-        cfg = util.getConfiguration();
+        cfg = util.getConfiguration(this.getClass());
 
         Cookie ckId = util.getCookiesByName(req, "userID");
 

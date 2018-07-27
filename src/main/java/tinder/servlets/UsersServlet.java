@@ -26,7 +26,7 @@ public class UsersServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Configuration cfg = util.getConfiguration();
+        Configuration cfg = util.getConfiguration(this.getClass());
 
         Map<String, User> model = new HashMap<>();
 

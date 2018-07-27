@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Configuration cfg = util.getConfiguration();
+        Configuration cfg = util.getConfiguration(this.getClass());
 
         Map<String, String> model = new HashMap<>();
         model.put("output", "Please sign in");
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Configuration cfg = util.getConfiguration();
+        Configuration cfg = util.getConfiguration(this.getClass());
         LoginData data;
 
         String username = req.getParameter("username");

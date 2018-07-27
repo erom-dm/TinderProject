@@ -29,7 +29,7 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Configuration cfg = util.getConfiguration();
+        Configuration cfg = util.getConfiguration(this.getClass());
         Cookie ckId = util.getCookiesByName(req, "userID");
 
         String[] uriParse = stringConverter(req);
