@@ -1,5 +1,6 @@
 package tinder.servlets;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -20,14 +21,16 @@ public class CssServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // take the path from the command line (HttpServletRequest)
         String url = req.getRequestURI();
+        InputStream resourceAsStream = this.getClass().getResourceAsStream(url);
+        IOUtils.copy(resourceAsStream, resp.getOutputStream());
 
-        Path filePath = null;
+        /*Path filePath = null;
         try {
             filePath = Paths.get(this.getClass().getResource(url).toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        Files.copy(filePath, resp.getOutputStream());
+        Files.copy(filePath, resp.getOutputStream());*/
 
 
         /*String url = req.getPathInfo();
