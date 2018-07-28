@@ -19,7 +19,7 @@ public class CssServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // take the path from the command line (HttpServletRequest)
-        String url = req.getPathInfo();
+        String url = req.getRequestURI();
 
         Path filePath = null;
         try {
