@@ -1,11 +1,13 @@
 package tinder.servlets;
+import org.apache.commons.io.FileUtils;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,17 +18,31 @@ public class CssServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // take the path from the command line (HttpServletRequest)
-        String url = req.getPathInfo();
+        /*String url = req.getPathInfo();
         if (url!=null) {
             // input
-            InputStream in = this.getClass().getResourceAsStream("static/html/css/style.css");
+            *//*InputStream in = this.getClass().getResourceAsStream("resources/static/html/css/style.css");
 
-            Files.copy((Path) in, resp.getOutputStream());
+            Files.copy((Path) in, resp.getOutputStream());*//*
 
+            Path filePath = null;
+            try {
+                filePath = Paths.get(this.getClass().getResource(url).toURI());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            Files.copy(filePath, resp.getOutputStream());
 
         } else {
             resp.getWriter().print("you should pass the file name after slash");
-        }
+        }*/
+        String url = req.getPathInfo();
+        url = url.substring(1,url.length());
+        String out = FileUtils.readFileToString(new File(url),"UTF-8");
+        byte[] buffer = out.getBytes();
+        ServletOutputStream outputStream = resp.getOutputStream();
+        outputStream.write(buffer);
+        outputStream.close();
     }
 
 

@@ -35,8 +35,8 @@ public class ServletUtil {
 
     public static Configuration getConfiguration(Class servletClass) throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-
-        cfg.setClassLoaderForTemplateLoading(servletClass.getClassLoader(), "static/html");
+        cfg.setDirectoryForTemplateLoading(new File("resources/static/html"));
+        //cfg.setClassLoaderForTemplateLoading(servletClass.getClassLoader(), "resources/static/html");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
